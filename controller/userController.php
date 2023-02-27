@@ -17,6 +17,7 @@ function register($registerData){
         checkData($registerData); //Call this function to check if data entered in the form by user respect all constraint of the database and if all field requiered is fill of data.
         ifMemberExist($registerData['userEmail']); //Call this function to check if the email entered by the user already match with a user registered in the database.
         registering($registerData); //Call this function to register the new member
+        $_SESSION['userUsername'] = $registerData['userUsername'];
         require_once dirname(__FILE__)."/../controller/navigation.php";
         home(); //Call this function to get back to homepage
     }
