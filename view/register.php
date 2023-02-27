@@ -10,7 +10,7 @@
 <?php if(isset($error)):?>
     <p><?= $error;?></p>
 <?php endif;?>
-<div class="container">
+<div class="container shadow p-3 mb-5 bg-white rounded">
         <h1 class="my-5"><b>Sign in</b></h1>
         <form method="POST" action="../index.php?action=register">
             <div class="mb-3">
