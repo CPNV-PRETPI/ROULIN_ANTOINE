@@ -3,7 +3,7 @@
  * @file      jsonModel.php
  * @brief     This file is the model is used to read and return the content of a json
  * @author    Created by Antoine Roulin
- * @version   23.02.2023
+ * @version   27.02.2023
  */
 
 /**

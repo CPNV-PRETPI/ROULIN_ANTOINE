@@ -1,7 +1,13 @@
 <?php
+/**
+ * @file      testUser.php
+ * @brief     This file is the test file is used to test function that concerne User
+ * @author    Created by Antoine Roulin
+ * @version   27.02.2023
+ */
+
 
 require "../../controller/userController.php";
-
 
 class testUser extends \PHPUnit\Framework\TestCase
 {

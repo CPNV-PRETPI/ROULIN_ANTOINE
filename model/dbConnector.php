@@ -3,7 +3,7 @@
  * @file      dbConnector.php
  * @brief     This file is the model is used to connect to database and do request to the database
  * @author    Created by Antoine Roulin
- * @version   10.02.2023
+ * @version   27.02.2023
  */
 
 /**

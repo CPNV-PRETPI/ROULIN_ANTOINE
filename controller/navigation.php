@@ -3,7 +3,7 @@
  * @file      navigation.php
  * @brief     This file is the controller managing all navigation functions on the website
  * @author    Created by Antoine Roulin
- * @version   10.02.2023
+ * @version   27.02.2023
  */
 
 /**
@@ -13,6 +13,9 @@ function home(){
     require_once dirname(__FILE__)."/../view/home.php";
 }
 
+/**
+ * @brief This function is designed to redirect the user on the register page when requested
+ */
 function displayRegister(){
     require_once dirname(__FILE__)."/../view/register.php";
 }

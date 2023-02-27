@@ -3,7 +3,7 @@
  * @file      userModel.php
  * @brief     This file is the model is used to do all actions
  * @author    Created by Antoine Roulin
- * @version   24.02.2023
+ * @version   27.02.2023
  */
 
 /**
