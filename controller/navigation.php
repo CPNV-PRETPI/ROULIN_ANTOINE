@@ -10,5 +10,10 @@
  * @brief This function is designed to redirect the user on the home page when requested
  */
 function home(){
-    require_once "view/home.php";
+    require_once dirname(__FILE__)."/../view/home.php";
 }
+
+function displayRegister(){
+    require_once dirname(__FILE__)."/../view/register.php";
+}
+
