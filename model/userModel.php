@@ -2,9 +2,32 @@
 /**
  * @file      userModel.php
  * @brief     This file is the model is used to do all actions
+ * @throws memberAlreadyExist
+ * @throws twoPasswordDontMatch
+ * @throws notMeetDatabaseRequirement|databaseException
+ * @version   01.03.2023
  * @author    Created by Antoine Roulin
- * @version   27.02.2023
  */
+
+function register($registerData) : void
+{
+    $checkDataResult = checkData($registerData);//Call this function to check if data entered in the form by user respect all constraint of the database and store the result of the function in the variable $checkDataResult.
+    $checkPasswordMatchResult = checkPasswordMatching($registerData); //Call this function to check if two password entered by user is the same and store the result of the function in the variable $checkPasswordMatchResult.a
+    $checkDoesMemberExistResult = doesMemberExist($registerData['userEmail']); //Call this function to check if the email entered by the user already match with a user registered in the database.
+    if ($checkDataResult){
+        if ($checkPasswordMatchResult){
+            if ($checkDoesMemberExistResult){
+                addUser($registerData); //Call this function to register the new member
+            } else {
+                throw new memberAlreadyExist("A member with the same email already exist");
+            }
+        } else {
+            throw new twoPasswordDontMatch("The two passwords you entered are not the same");
+        }
+    } else {
+        throw new notMeetDatabaseRequirement("The information you have entered does not meet the requested conditions");
+    }
+}
 
 /**
  * @brief Check if data entered in the form by user respect all constraint of the database and if all field requiered is fill of data.
@@ -12,30 +35,27 @@
  * @throws passwordNotMatchException : Meaning two password given by user is not matching.
  * @throws NotFullFillException : Meaning all field requiered in the form are not fill of information.
  */
-function checkData($dataToCheck){
-    //Checking if all field are filled.
-    if(
-        isset($dataToCheck['userUsername']) &&
-        isset($dataToCheck['userPassword']) &&
-        isset($dataToCheck['userPasswordVerify']) &&
-        isset($dataToCheck['userEmail'])
+function checkData($dataToCheck) : bool
+{
+    //Check if all field respect database constraint.
+    if (
+        strlen($dataToCheck['userUsername']) <= 50 &&
+        strlen($dataToCheck['userPassword']) <= 256 &&
+        strlen($dataToCheck['userPasswordVerify']) <= 256 &&
+        strlen($dataToCheck['userEmail']) <= 319
     ) {
-        //Check if all field respect database constraint.
-        if (
-            strlen($dataToCheck['userUsername']) <= 50 &&
-            strlen($dataToCheck['userPassword']) <= 256 &&
-            strlen($dataToCheck['userPasswordVerify']) <= 256 &&
-            strlen($dataToCheck['userEmail']) <= 319
-        ) {
-            if ($dataToCheck['userPassword'] == $dataToCheck['userPasswordVerify']) {
-                return true;
-            } else {
-                throw new passwordNotMatchException();
-            }
-        }
+        return true;
+    } else{
+        return false;
     }
-    else{
-        throw new notFullFillException();
+}
+
+function checkPasswordMatching($passwordToCheckMatching) : bool
+{
+    if ($passwordToCheckMatching['userPassword'] == $passwordToCheckMatching['userPasswordVerify']) {
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -45,19 +65,15 @@ function checkData($dataToCheck){
  * @throws databaseException : Meaning an error comming from the database connexion.
  * @throws registeredException : Meaning a user already exists with this email address.
  */
-function ifMemberExist($email)
+function doesMemberExist($email) : bool
 {
     require_once dirname(__FILE__)."/dbConnector.php";
-    try {
-        $query = "SELECT email_address FROM accounts WHERE email_address ='" . $email . "';";
-        $queryResult = executeQueryReturn($query);
-        if(count($queryResult) != 0){
-            throw new registeredException();
-        }
+    $query = "SELECT email_address FROM accounts WHERE email_address ='" . $email . "';";
+    $queryResult = executeQueryReturn($query);
+    if(count($queryResult) == 1){
+        return false;
     }
-    catch (databaseException){
-        throw new databaseException();
-    }
+    return true;
 }
 
 /**
@@ -65,18 +81,14 @@ function ifMemberExist($email)
  * @param $registerData
  * @throws databaseException : Meaning an error from the database connexion.
  */
-function registering($registerData){
+function addUser($registerData) : void
+{
     require_once dirname(__FILE__)."/dbConnector.php";
-    try {
-        $passwordHash = password_hash($registerData['userPassword'], PASSWORD_DEFAULT);
-        $query = "INSERT INTO accounts VALUES (NULL,'" . $registerData['userEmail'] . "','" . $registerData['userUsername'] . "','" . $passwordHash . "');";
-        $queryResult = executeQuery($query);
-    }
-    catch (databaseException){
-        throw new databaseException();
-    }
+    $passwordHash = password_hash($registerData['userPassword'], PASSWORD_DEFAULT);
+    $query = "INSERT INTO accounts VALUES (NULL,'" . $registerData['userEmail'] . "','" . $registerData['userUsername'] . "','" . $passwordHash . "');";
+    executeQuery($query);
 }
 
-class registeredException extends Exception{}
-class passwordNotMatchException extends Exception{}
-class notFullFillException extends Exception{}
+class notMeetDatabaseRequirement extends Exception{}
+class twoPasswordDontMatch extends Exception{}
+class memberAlreadyExist extends Exception{}

@@ -3,7 +3,7 @@
  * @file      dbConnector.php
  * @brief     This file is the model is used to connect to database and do request to the database
  * @author    Created by Antoine Roulin
- * @version   27.02.2023
+ * @version   01.03.2023
  */
 
 /**
@@ -21,7 +21,7 @@ function openDBConnexion(){
         $tempDBConnexion = new PDO($dsn, $credentials->userName, $credentials->userPwd);
     }
     catch(jsonFileException | PDOException){
-        throw new databaseException();
+        throw new databaseException("An error has occurred, please try again later");
     }
     return $tempDBConnexion;
 }
@@ -30,6 +30,7 @@ function openDBConnexion(){
  * @brief This function is designed to execute a select query received as parameter
  * @param $query : the query to execute
  * @return array|null
+ * @throws databaseException
  * @link https://php.net/manual/en/pdo.prepare.php
  */
 function executeQueryReturn($query){
@@ -58,7 +59,7 @@ function executeQuery($query){
     if ($dbConnexion != null){
         $statement = $dbConnexion->prepare($query); //Prepare the query
         $result = $statement->execute(); //Query execution
-        if($result == false){
+        if(!$result){ //If $result is false that tell that the query has not work
             throw new databaseException();
         }
     }
@@ -66,7 +67,6 @@ function executeQuery($query){
         throw new databaseException();
     }
     $dbConnexion = null; //Closing connection to the DB
-
 }
 
 class databaseException extends Exception{} //Create a custom class databaseException that extends the main class Exception

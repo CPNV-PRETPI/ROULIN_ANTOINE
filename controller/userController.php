@@ -3,7 +3,7 @@
 * @file      navigation.php
 * @brief     This file is the controller managing all actions that concern user
 * @author    Created by Antoine Roulin
-* @version   27.02.2023
+* @version   01.03.2023
 */
 
 /**
@@ -11,32 +11,29 @@
  * @param $registerData
  * @return void
  */
-function register($registerData){
-    try {
-        require_once dirname(__FILE__)."/../model/userModel.php";
-        checkData($registerData); //Call this function to check if data entered in the form by user respect all constraint of the database and if all field requiered is fill of data.
-        ifMemberExist($registerData['userEmail']); //Call this function to check if the email entered by the user already match with a user registered in the database.
-        registering($registerData); //Call this function to register the new member
-        $_SESSION['userUsername'] = $registerData['userUsername'];
-        require_once dirname(__FILE__)."/../controller/navigation.php";
-        home(); //Call this function to get back to homepage
+function registerUser($registerData) : void
+{
+    if(
+        isset($registerData['userUsername']) &&
+        isset($registerData['userPassword']) &&
+        isset($registerData['userPasswordVerify']) &&
+        isset($registerData['userEmail'])
+    ){
+        try {
+            require_once dirname(__FILE__)."/../model/userModel.php";
+            register($registerData);
+            $_SESSION['userUsername'] = $registerData['userUsername'];
+            require_once (dirname(__FILE__)."/../controller/navigation.php");
+            home(); //Call this function to get back to homepage
+        }
+        catch (notMeetDatabaseRequirement|twoPasswordDontMatch|memberAlreadyExist|databaseException $e){
+            $error = $e->getMessage(); //Set the variable $error by the message contained inthe thrown exception to display after the content of $error in the view
+            require_once (dirname(__FILE__)."/../controller/navigation.php");
+            displayRegister(); //Call this function to get back to register page
+        }
     }
-    catch (databaseException){
-        $error = 'An error has occured. Please try later';
-        require_once (dirname(__FILE__)."/../view/register.php");
-    }
-    catch (passwordNotMatchException){
-        $error = 'The two passwords are not matching';
-        require_once (dirname(__FILE__)."/../view/register.php");
-    }
-    catch (notFullFillException){
-        $error = 'You have not filled all requiered field or not correctly filled';
-        require_once (dirname(__FILE__)."/../view/register.php");
-    }
-    catch (registeredException){
-        $error = 'You already have an account';
-        require_once (dirname(__FILE__)."/../view/register.php");
-    }
+    $error = "One of the fields is empty, please fill it in";
+    require_once (dirname(__FILE__)."/../controller/navigation.php");
+    displayRegister(); //Call this function to get back to register page
 }
-
 ?>

@@ -3,21 +3,8 @@
  * @file      jsonModel.php
  * @brief     This file is the model is used to read and return the content of a json
  * @author    Created by Antoine Roulin
- * @version   27.02.2023
+ * @version   01.03.2023
  */
-
-/**
- * @brief This function is designed to get the correct path to a specific file no matter where the project is located
- * @param $fileName :the path to the file, including the file name, from the project root directory
- * @return string : the full path to the json file
- */
-function getFullPath($fileName){
-    // Get the current working directory
-    $currentPath = getcwd();
-
-    // Return the full path of the json file
-    return $currentPath . "/" . $fileName;
-}
 
 /**
  * @brief This function is designed to open the Json file in read mode, read it and return the content decoded
