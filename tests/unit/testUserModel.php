@@ -1,16 +1,14 @@
 <?php
 /**
- * @file      testUser.php
- * @brief     This file is the test file is used to test function that concerne User
+ * @file      testUserModel.php
+ * @brief     This file is the test file is used to test function that concerne User in the userModel.php file
  * @author    Created by Antoine Roulin
  * @version   01.03.2023
  */
 
-
-require "../../controller/userController.php";
 require "../../model/userModel.php";
 
-class testUser extends \PHPUnit\Framework\TestCase
+class testUserModel extends \PHPUnit\Framework\TestCase
 {
     private array $registerData = [];
 
@@ -24,14 +22,18 @@ class testUser extends \PHPUnit\Framework\TestCase
 
     public function testCheckData_DataMeetDatabaseExpectation_Success(){
         //Given
+        $this->registerData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad'; //Username of exactly 50 char
         //When
         //Then
+        $this->assertTrue(checkData($this->registerData));
     }
 
     public function testCheckData_DataDoesntMeetDatabaseExpectation_Success(){
         //Given
+        $this->registerData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Username of exactly 53 char
         //When
         //Then
+        $this->assertFalse(checkData($this->registerData));
     }
 
     public function testCheckPasswordMatching_TwoPasswordMatch_Success(){
@@ -49,10 +51,11 @@ class testUser extends \PHPUnit\Framework\TestCase
         $this->assertFalse(checkPasswordMatching($this->registerData));
     }
 
-    public function testRegistering_UserDoesntExist_Success(){
+    public function testDoesMemberExist_UserDoesntExist_Success(){
         //Given
         //When
         //Then
+        $this->assertFalse(doesMemberExist($this->registerData));
     }
 
     public function testRegistering_UserExist_Success(){
@@ -108,20 +111,6 @@ class testUser extends \PHPUnit\Framework\TestCase
 
         //Then
     }
-        /*// check if the created user exists
-        try{
-            doesMemberExist($this->registerData['userEmail']);
-            // the user doesn't exists in the database
-            $doesUserExists = false;
-        }
-        catch(registeredException){
-            // the user exists in the database
-            $doesUserExists = true;
-        }
-        catch(databaseException){
-            $doesUserExists = false;
-        }
-        */
 
     public function testUserRegisterPasswordNotTheSame(){
 

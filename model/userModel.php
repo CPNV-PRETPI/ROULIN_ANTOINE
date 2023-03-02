@@ -16,7 +16,7 @@ function register($registerData) : void
     $checkDoesMemberExistResult = doesMemberExist($registerData['userEmail']); //Call this function to check if the email entered by the user already match with a user registered in the database.
     if ($checkDataResult){
         if ($checkPasswordMatchResult){
-            if ($checkDoesMemberExistResult){
+            if (!$checkDoesMemberExistResult){
                 addUser($registerData); //Call this function to register the new member
             } else {
                 throw new memberAlreadyExist("A member with the same email already exist");
@@ -71,9 +71,9 @@ function doesMemberExist($email) : bool
     $query = "SELECT email_address FROM accounts WHERE email_address ='" . $email . "';";
     $queryResult = executeQueryReturn($query);
     if(count($queryResult) == 1){
-        return false;
+        return true;
     }
-    return true;
+    return false;
 }
 
 /**
