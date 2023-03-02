@@ -31,9 +31,10 @@ function registerUser($registerData) : void
             require_once (dirname(__FILE__)."/../controller/navigation.php");
             displayRegister(); //Call this function to get back to register page
         }
+    } else {
+        $error = "One of the fields is empty, please fill it in"; //Set the variable $error a custom message if the form was not filled in completly
+        require_once (dirname(__FILE__)."/../controller/navigation.php");
+        displayRegister(); //Call this function to get back to register page
     }
-    $error = "One of the fields is empty, please fill it in";
-    require_once (dirname(__FILE__)."/../controller/navigation.php");
-    displayRegister(); //Call this function to get back to register page
 }
 ?>

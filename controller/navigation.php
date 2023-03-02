@@ -9,14 +9,16 @@
 /**
  * @brief This function is designed to redirect the user on the home page when requested
  */
-function home(){
+function home() : void
+{
     require_once dirname(__FILE__)."/../view/home.php";
 }
 
 /**
  * @brief This function is designed to redirect the user on the register page when requested
  */
-function displayRegister(){
+function displayRegister() : void
+{
     require_once dirname(__FILE__)."/../view/register.php";
 }
 
