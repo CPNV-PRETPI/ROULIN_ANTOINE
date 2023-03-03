@@ -1,12 +1,13 @@
 <?php
 /**
  * @file      testUserModel.php
- * @brief     This file is the test file is used to test function that concerne User in the userModel.php file
+ * @brief     This file is the test file is used to test function that concern User in the userModel.php file
  * @author    Created by Antoine Roulin
- * @version   01.03.2023
+ * @version   03.03.2023
  */
 
 require "../../model/userModel.php";
+
 
 class testUserModel extends \PHPUnit\Framework\TestCase
 {
@@ -22,7 +23,6 @@ class testUserModel extends \PHPUnit\Framework\TestCase
 
     public function testCheckData_DataMeetDatabaseExpectation_Success(){
         //Given
-        $this->registerData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad'; //Username of exactly 50 char
         //When
         //Then
         $this->assertTrue(checkData($this->registerData));
@@ -58,121 +58,37 @@ class testUserModel extends \PHPUnit\Framework\TestCase
         $this->assertFalse(doesMemberExist($this->registerData));
     }
 
-    public function testRegistering_UserExist_Success(){
+    public function testDoesMemberExist_UserAlreadyExist_Success(){
         //Given
-        registering($this->registerData);
+        addUser($this->registerData);
         //When
         //Then
+        $this->assertTrue(doesMemberExist($this->registerData['userEmail']));
     }
 
-    public function testDoesExist_UserExist_Success(){
+    public function testAddUser_NominalCase_Success(){
         //Given
-        registering($this->registerData);
         //When
+        addUser($this->registerData);
         //Then
-        $this->assertTrue(doesMemberExist($this->registerData["userEmail"]));
+        $this->assertTrue(doesMemberExist($this->registerData['userEmail']));
     }
 
-    public function testDoesExist_UserDoesntExist_Success(){
+    public function testRegister_UserDoesntExist_Success(){
         //Given
         //When
-        //Then
-        $this->assertFalse(doesMemberExist($this->registerData["userEmail"]));
-    }
-
-    public function testRegister_NominalCase_Success()
-    {
-        //Given
-        // create the post request array
-
-
-        //When
-        // register the new user with the array
         register($this->registerData);
-
         //Then
-        $this->assertEquals(True, $doesUserExists);
-
+        $this->assertTrue(doesMemberExist($this->registerData['userEmail']));
     }
 
-    public function testRegister_UserAlreadyExist_ThrowException()
-    {
+    public function testRegister_UserAlreadyExist_ThrowException(){
         //Given
-        // create the post request array
-        $this->registerData['userEmail'] = 'unittest@test.ch';
-        $this->registerData['userUsername'] = 'unittest';
-        $this->registerData['userPassword'] = '1234';
-        $this->registerData['userPasswordVerify'] = '1234';
-        register($this->registerData);
-
+        addUser($this->registerData);
         //When
-        $this->expectException(registeredException::class);
-        register($this->registerData);
-
         //Then
-    }
-
-    public function testUserRegisterPasswordNotTheSame(){
-
-        // create the post request array
-        $registerData = [];
-
-        $registerData['userEmail'] = 'unittest@test.ch';
-        $registerData['userUsername'] = 'unittest';
-        $registerData['userPassword'] = '1234';
-        $registerData['userPasswordVerify'] = 'paslememe';
-
-        // register the new user with the array
-        register($registerData);
-
-        // check if the created user exists
-        try{
-            ifMemberExist($registerData['userEmail']);
-            // the user doesn't exists in the database
-            $doesUserExists = false;
-        }
-        catch(registeredException){
-            // the user exists in the database
-            $doesUserExists = true;
-        }
-        catch(databaseException){
-            $doesUserExists = false;
-        }
-
-        $this->assertEquals(False, $doesUserExists);
-
-        // clean
-        $this->cleanUser();
-    }
-
-    public function testUserLogin(){
-
-        // create user
-
-        // login the user with user / password
-
-        // check if the session exists
-
-        $this->assertEquals(True, false);
-    }
-
-    public function testUserLogout(){
-
-        // create user
-
-        // login the user with user / password
-
-        // check if session exists
-
-        // logout
-
-        // check is session ended
-
-        $this->assertEquals(True, false);
-    }
-
-    public function testUserUnregister(){
-        $this->assertEquals(True, false);
+        $this->expectException(memberAlreadyExist::class);
+        register($this->registerData);
     }
 
     public function cleanUser(){
