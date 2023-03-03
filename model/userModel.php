@@ -2,22 +2,28 @@
 /**
  * @file      userModel.php
  * @brief     This file is the model is used to do all actions
- * @throws memberAlreadyExist
- * @throws twoPasswordDontMatch
- * @throws notMeetDatabaseRequirement|databaseException
- * @version   01.03.2023
  * @author    Created by Antoine Roulin
+ * @version   03.03.2023
  */
 
+/**
+ * @brief This function will go through all verifications proccess and if all conditions is respected it will register the user using addUser function
+ * @param $registerData
+ * @return void
+ * @throws databaseException
+ * @throws memberAlreadyExist
+ * @throws notMeetDatabaseRequirement
+ * @throws twoPasswordDontMatch
+ */
 function register($registerData) : void
 {
     $checkDataResult = checkData($registerData);//Call this function to check if data entered in the form by user respect all constraint of the database and store the result of the function in the variable $checkDataResult.
     $checkPasswordMatchResult = checkPasswordMatching($registerData); //Call this function to check if two password entered by user is the same and store the result of the function in the variable $checkPasswordMatchResult.a
     $checkDoesMemberExistResult = doesMemberExist($registerData['userEmail']); //Call this function to check if the email entered by the user already match with a user registered in the database.
-    if ($checkDataResult){
-        if ($checkPasswordMatchResult){
-            if (!$checkDoesMemberExistResult){
-                addUser($registerData); //Call this function to register the new member
+    if ($checkDataResult){ // If the result of the function checkData is true it will do the next check inside of the condition
+        if ($checkPasswordMatchResult){ // If the result of the function checkPasswordMatching is true it will do the next check inside of the condition
+            if (!$checkDoesMemberExistResult){ // If the result of the function doesMemberExist is false (user doesn't already exist) it will do the addUser function that is inside of the condition
+                addUser($registerData); //Call this function to add the new member
             } else {
                 throw new memberAlreadyExist("A member with the same email already exist");
             }
@@ -32,8 +38,7 @@ function register($registerData) : void
 /**
  * @brief Check if data entered in the form by user respect all constraint of the database and if all field requiered is fill of data.
  * @param $dataToCheck
- * @throws passwordNotMatchException : Meaning two password given by user is not matching.
- * @throws NotFullFillException : Meaning all field requiered in the form are not fill of information.
+ * @return bool
  */
 function checkData($dataToCheck) : bool
 {
@@ -50,6 +55,11 @@ function checkData($dataToCheck) : bool
     }
 }
 
+/**
+ * @brief This function will check if both password entered by the user is matching (same)
+ * @param $passwordToCheckMatching
+ * @return bool
+ */
 function checkPasswordMatching($passwordToCheckMatching) : bool
 {
     if ($passwordToCheckMatching['userPassword'] == $passwordToCheckMatching['userPasswordVerify']) {
@@ -60,10 +70,10 @@ function checkPasswordMatching($passwordToCheckMatching) : bool
 }
 
 /**
- * @brief This function is designed to check if the email entered by the user already match with a user registered in the database.
+ * @brief This function is designed to check if the email entered by the user already match with an email of a user registered in the database.
  * @param $email
- * @throws databaseException : Meaning an error comming from the database connexion.
- * @throws registeredException : Meaning a user already exists with this email address.
+ * @return bool
+ * @throws databaseException
  */
 function doesMemberExist($email) : bool
 {
@@ -77,9 +87,10 @@ function doesMemberExist($email) : bool
 }
 
 /**
- * @brief This function is designed to register a new user in the database.
+ * @brief This function is designed to add a new user in the database.
  * @param $registerData
- * @throws databaseException : Meaning an error from the database connexion.
+ * @return void
+ * @throws databaseException
  */
 function addUser($registerData) : void
 {
