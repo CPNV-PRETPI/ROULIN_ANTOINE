@@ -30,7 +30,7 @@ class testUserModel extends \PHPUnit\Framework\TestCase
 
     public function testCheckData_DataDoesntMeetDatabaseExpectation_Success(){
         //Given
-        $this->registerData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Username of exactly 53 char
+        $this->registerData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Username of exactly 53 char, database expect max of 50 char
         //When
         //Then
         $this->assertFalse(checkData($this->registerData));
@@ -45,7 +45,7 @@ class testUserModel extends \PHPUnit\Framework\TestCase
 
     public function testCheckPasswordMatching_TwoPasswordDoesntMatch_Success(){
         //Given
-        $this->registerData['userPasswordVerify'] = '5678';
+        $this->registerData['userPasswordVerify'] = '5678'; //Password not match the password given in the SetUp function
         //When
         //Then
         $this->assertFalse(checkPasswordMatching($this->registerData));
@@ -74,7 +74,7 @@ class testUserModel extends \PHPUnit\Framework\TestCase
         $this->assertTrue(doesMemberExist($this->registerData['userEmail']));
     }
 
-    public function testRegister_UserDoesntExist_Success(){
+    public function testRegister_NominalCase_Success(){
         //Given
         //When
         register($this->registerData);
@@ -88,6 +88,24 @@ class testUserModel extends \PHPUnit\Framework\TestCase
         //When
         //Then
         $this->expectException(memberAlreadyExist::class);
+        register($this->registerData);
+    }
+
+    public function testRegister_UserFormNotMeetDataBaseRequirement_ThrowException(){
+        //Given
+        $this->registerData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Username of exactly 53 char, database expect max of 50 char
+        //When
+        //Then
+        $this->expectException(notMeetDatabaseRequirement::class);
+        register($this->registerData);
+    }
+
+    public function testRegister_UserTwoPasswordDoesntMatch_ThrowException(){
+        //Given
+        $this->registerData['userPasswordVerify'] = '5678'; //Password not match the password given in the SetUp function
+        //When
+        //Then
+        $this->expectException(twoPasswordDontMatch::class);
         register($this->registerData);
     }
 
