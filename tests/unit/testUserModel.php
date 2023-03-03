@@ -6,10 +6,11 @@
  * @version   03.03.2023
  */
 
+use PHPUnit\Framework\TestCase;
+
 require "../../model/userModel.php";
 
-
-class testUserModel extends \PHPUnit\Framework\TestCase
+class testUserModel extends TestCase
 {
     private array $registerData = [];
 
@@ -112,7 +113,7 @@ class testUserModel extends \PHPUnit\Framework\TestCase
     public function cleanUser(){
         require_once "../../model/dbConnector.php";
         try {
-            $query = "DELETE FROM accounts WHERE email_address = 'unittest@test.ch'";
+            $query = "DELETE FROM accounts WHERE email ='" . $this->registerData['userEmail'] ."';";
             executeQuery($query);
         }
         catch (databaseException){

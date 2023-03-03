@@ -78,7 +78,7 @@ function checkPasswordMatching($passwordToCheckMatching) : bool
 function doesMemberExist($email) : bool
 {
     require_once dirname(__FILE__)."/dbConnector.php";
-    $query = "SELECT email_address FROM accounts WHERE email_address ='" . $email . "';";
+    $query = "SELECT email FROM accounts WHERE email ='" . $email . "';";
     $queryResult = executeQueryReturn($query);
     if(count($queryResult) == 1){
         return true;
