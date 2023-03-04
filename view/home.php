@@ -3,7 +3,7 @@
 <?php
 echo "Hello World !";
 ?>
-<a href="../index.php?action=displayRegister"><button>S'inscrire</button></a>
+<a href="../index.php?action=displayLogin"><button>Login</button></a>
 <?php if(isset($_SESSION['userUsername'])):?>
     <p><?= $_SESSION['userUsername'];?></p>
 <?php endif;?>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BudgetPlanner - Register</title>
+    <title>BudgetPlanner - Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
@@ -13,34 +13,26 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <h1 class="text-center text-dark mt-5">Register</h1>
+            <h1 class="text-center text-dark mt-5">Login</h1>
             <div class="card my-5">
-                <form class="card-body cardbody-color p-lg-5" method="post" action="../index.php?action=register">
+                <form class="card-body cardbody-color p-lg-5">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" name="userEmail" placeholder="Type your email here" aria-describedby="emailHelp">
                     </div>
                     <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="userUsername" placeholder="Type your username here">
-                    </div>
-                    <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" name="userPassword" placeholder="Type your password here">
                     </div>
-                    <div class="mb-3">
-                        <label for="userPasswordVerify" class="form-label">Password Verify</label>
-                        <input type="password" class="form-control" id="userPasswordVerify" name="userPasswordVerify" placeholder="Type your password again here">
-                    </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary px-5 mb-1 w-100">Register</button>
+                        <button type="submit" class="btn btn-primary px-5 mb-1 w-100">Login</button>
                     </div>
                     <div class="text-center">
                         <a href="../index.php?action=home"><button type="button" class="btn btn-danger px-5 mb-5 w-100">Cancel</button></a>
                     </div>
                     <div id="emailHelp" class="form-text text-center mb-5 text-dark">
-                        Already Registered ?
-                        <a href="../index.php?action=displayLogin" class="text-dark fw-bold">Login to your Account</a>
+                        Not Registered ?
+                        <a href="../index.php?action=displayRegister" class="text-dark fw-bold"> Create an Account</a>
                     </div>
                 </form>
             </div>
