@@ -3,7 +3,7 @@
  * @file      testUserController.php
  * @brief     This file is the test file is used to test function that concern User in the userController.php file
  * @author    Created by Antoine Roulin
- * @version   03.03.2023
+ * @version   04.03.2023
  */
 
 use PHPUnit\Framework\TestCase;
