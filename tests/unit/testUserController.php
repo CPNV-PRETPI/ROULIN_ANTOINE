@@ -25,18 +25,30 @@ class testUserController extends TestCase
     public function testRegisterUser_NominalCase_Success(){
         //Given
         //When
+        registerUser($this->registerData);
         //Then
+        $this->assertTrue($this->checkUserHasBeenRegistered());
     }
+
+    /*
+    public function testRegisterUser_TwoPasswordNotMatch_Success(){
+        //Given
+        $this->registerData['userPasswordVerify'] = '5678';
+        //When
+        registerUser($this->registerData);
+        //Then
+        $this->assertEquals("The two passwords you entered are not the same", $error);
+    }
+    */
 
     public function checkUserHasBeenRegistered(){
         require_once "../../model/dbConnector.php";
-        try {
-            $query = "SELECT email FROM accounts WHERE email ='" . $this->registerData['userEmail'] ."';";
-            executeQuery($query);
+        $query = "SELECT email FROM accounts WHERE email ='" . $this->registerData['userEmail'] ."';";
+        $queryResult = executeQueryReturn($query);
+        if(count($queryResult) == 1){
+            return true;
         }
-        catch (databaseException){
-            print 'Database error';
-        }
+        return false;
     }
 
     public function cleanUser(){
