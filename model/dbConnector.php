@@ -42,7 +42,7 @@ function executeQueryReturn($query){
         $queryResult = $statement->fetchAll();
     }
     else{
-        throw new databaseException();
+        throw new databaseException("An error has occurred, please try again later");
     }
     $dbConnexion = null; //Closing connection to the DB
     return $queryResult;
@@ -60,11 +60,11 @@ function executeQuery($query){
         $statement = $dbConnexion->prepare($query); //Prepare the query
         $result = $statement->execute(); //Query execution
         if(!$result){ //If $result is false that tell that the query has not work
-            throw new databaseException();
+            throw new databaseException("An error has occurred, please try again later");
         }
     }
     else{
-        throw new databaseException();
+        throw new databaseException("An error has occurred, please try again later");
     }
     $dbConnexion = null; //Closing connection to the DB
 }
