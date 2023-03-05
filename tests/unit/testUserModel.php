@@ -3,7 +3,7 @@
  * @file      testUserModel.php
  * @brief     This file is the test file is used to test function that concern User in the userModel.php file
  * @author    Created by Antoine Roulin
- * @version   03.03.2023
+ * @version   05.03.2023
  */
 
 use PHPUnit\Framework\TestCase;
@@ -141,6 +141,28 @@ class testUserModel extends TestCase
         //Then
         $this->expectException(wrongLoginCredentials::class);
         login($this->userTestData);
+    }
+
+    public function testLogout_SessionComingFromRegister_Success(): void
+    {
+        //Given
+        register($this->userTestData);
+        //When
+        logout();
+        //Then
+        $this->assertEquals(null, $_SESSION);
+    }
+
+    public function testLogout_SessionComingFromLogin_Success(): void
+    {
+        //Given
+        register($this->userTestData);
+        logout();
+        //When
+        login($this->userTestData);
+        logout();
+        //Then
+        $this->assertEquals(null, $_SESSION);
     }
 
     public function cleanUser(){

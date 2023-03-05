@@ -3,7 +3,7 @@
  * @file      testUserController.php
  * @brief     This file is the test file is used to test function that concern User in the userController.php file
  * @author    Created by Antoine Roulin
- * @version   04.03.2023
+ * @version   05.03.2023
  */
 
 use PHPUnit\Framework\TestCase;
@@ -37,6 +37,28 @@ class testUserController extends TestCase
         loginUser($this->userTestData);
         //Then
         $this->assertEquals($this->userTestData['userUsername'],$_SESSION['username']);
+    }
+
+    public function testLogout_SessionComingFromRegister_Success(): void
+    {
+        //Given
+        registerUser($this->userTestData);
+        //When
+        logoutUser();
+        //Then
+        $this->assertEquals(null, $_SESSION);
+    }
+
+    public function testLogout_SessionComingFromLogin_Success(): void
+    {
+        //Given
+        registerUser($this->userTestData);
+        logoutUser();
+        //When
+        loginUser($this->userTestData);
+        logoutUser();
+        //Then
+        $this->assertEquals(null, $_SESSION);
     }
 
     /* Try to create a test that test the RegisterUser function not in the nominal case
