@@ -9,6 +9,8 @@
 require "controller/userController.php";
 require "controller/navigation.php";
 
+session_start();
+
 if(isset($_GET['action'])){
     $action = $_GET['action'];
     switch ($action){
@@ -23,6 +25,9 @@ if(isset($_GET['action'])){
             break;
         case "register":
             registerUser($_POST);
+            break;
+        case "login":
+            loginUser($_POST);
             break;
     }
 }
