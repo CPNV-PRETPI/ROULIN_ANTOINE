@@ -3,7 +3,7 @@
  * @file      index.php
  * @brief     This file is the rooter managing the link with controllers.
  * @author    Created by Antoine Roulin
- * @version   01.03.2023
+ * @version   05.03.2023
  */
 
 require "controller/userController.php";
@@ -28,6 +28,9 @@ if(isset($_GET['action'])){
             break;
         case "login":
             loginUser($_POST);
+            break;
+        case "logout":
+            logoutUser();
             break;
     }
 }
