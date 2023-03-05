@@ -13,7 +13,6 @@ require "../../model/userModel.php";
 class testUserModel extends TestCase
 {
     private array $userTestData = [];
-    private array $loginData = [];
     public function setUp(): void
     {
         $this->userTestData['userEmail'] = 'unittest@test.ch';
@@ -103,18 +102,45 @@ class testUserModel extends TestCase
 
     public function testRegister_UserTwoPasswordDoesntMatch_ThrowException(){
         //Given
-        $this->userTestData['userPasswordVerify'] = '5678'; //Password not match the password given in the SetUp function
+        $this->userTestData['userPasswordVerify'] = 'NotTheSamePassword'; //Password not match the password given in the SetUp function
         //When
         //Then
         $this->expectException(twoPasswordDontMatch::class);
         register($this->userTestData);
     }
 
-    public function testLogin_NominalCase_Success(){
+    /**
+     * Difference between assertEquals() and assertSame() is that assertEquals() try to match only the value of the expected and actual value and assertSame() will try to match the value and type of the data of the expected and actual
+     * @link : https://stackoverflow.com/questions/10254180/difference-between-assertequals-and-assertsame-in-phpunit
+     */
+    public function testLogin_NominalCase_Success(): void
+    {
         //Given
         register($this->userTestData);
         //When
+        login($this->userTestData);
         //Then
+        $this->assertEquals($this->userTestData['userUsername'],$_SESSION['username']);
+    }
+
+    public function testLogin_MemberDoesntExist_Success(): void
+    {
+        //Given
+        //When
+        //Then
+        $this->expectException(memberDoesntExist::class);
+        login($this->userTestData);
+    }
+
+    public function testLogin_MemberExistButWithWrongCredentials_Success(): void
+    {
+        //Given
+        register($this->userTestData);
+        $this->userTestData['userPassword'] = "NotTheSamePassword"; //Set userTestData['userPassword'] with not the password of the member this member in the database
+        //When
+        //Then
+        $this->expectException(wrongLoginCredentials::class);
+        login($this->userTestData);
     }
 
     public function cleanUser(){
