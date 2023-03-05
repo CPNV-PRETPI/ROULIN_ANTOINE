@@ -57,7 +57,8 @@ function loginUser($loginData) : void
     }
 }
 
-function logoutUser(){
+function logoutUser(): void
+{
     require_once dirname(__FILE__)."/../model/userModel.php";
     logout();
     require_once (dirname(__FILE__)."/../view/home.php");
