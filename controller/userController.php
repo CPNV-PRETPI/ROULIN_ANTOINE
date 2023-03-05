@@ -22,7 +22,6 @@ function registerUser($registerData) : void
         try {
             require_once dirname(__FILE__)."/../model/userModel.php";
             register($registerData);
-            $_SESSION['userUsername'] = $registerData['userUsername'];
             require_once (dirname(__FILE__)."/../view/home.php");
         }
         catch (notMeetDatabaseRequirement|twoPasswordDontMatch|memberAlreadyExist|databaseException $e){
@@ -46,17 +45,22 @@ function loginUser($loginData) : void
         try {
             require_once dirname(__FILE__)."/../model/userModel.php";
             login($loginData);
-            $_SESSION['userUsername'] = $loginData['userUsername'];
             require_once (dirname(__FILE__)."/../view/home.php");
         }
-        catch (databaseException $e){
+        catch (databaseException|wrongLoginCredentials|memberDoesntExist $e){
             $error = $e->getMessage(); //Set the variable $error by the message contained in the thrown exception to display after the content of $error in the view
-            require_once (dirname(__FILE__)."/../view/register.php");
+            require_once (dirname(__FILE__)."/../view/login.php");
         }
     } else {
         $error = "One of the fields is empty, please fill it in"; //Set the variable $error a custom message if the form was not filled in completly
         require_once (dirname(__FILE__)."/../view/register.php");
     }
+}
+
+function logoutUser(){
+    require_once dirname(__FILE__)."/../model/userModel.php";
+    logout();
+    require_once (dirname(__FILE__)."/../view/home.php");
 }
 
 
