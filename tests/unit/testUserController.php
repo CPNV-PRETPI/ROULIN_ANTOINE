@@ -12,38 +12,48 @@ require "../../controller/userController.php";
 
 class testUserController extends TestCase
 {
-    private array $registerData = [];
+    private array $userTestData = [];
 
     public function setUp(): void
     {
-        $this->registerData['userEmail'] = 'unittest@test.ch';
-        $this->registerData['userUsername'] = 'unittest';
-        $this->registerData['userPassword'] = '1234';
-        $this->registerData['userPasswordVerify'] = '1234';
+        $this->userTestData['userEmail'] = 'unittest@test.ch';
+        $this->userTestData['userUsername'] = 'unittest';
+        $this->userTestData['userPassword'] = '1234';
+        $this->userTestData['userPasswordVerify'] = '1234';
     }
 
     public function testRegisterUser_NominalCase_Success(){
         //Given
         //When
-        registerUser($this->registerData);
+        registerUser($this->userTestData);
         //Then
         $this->assertTrue($this->checkUserHasBeenRegistered());
     }
 
-    /*
+    public function testLoginUser_NominalCase_Success(){
+        //Given
+        registerUser($this->userTestData);
+        //When
+        loginUser($this->userTestData);
+        //Then
+        $this->assertEquals($this->userTestData['userUsername'],$_SESSION['username']);
+    }
+
+    /* Try to create a test that test the RegisterUser function not in the nominal case
     public function testRegisterUser_TwoPasswordNotMatch_Success(){
         //Given
-        $this->registerData['userPasswordVerify'] = '5678';
+        $this->userTestData['userPasswordVerify'] = '5678';
         //When
-        registerUser($this->registerData);
+        registerUser($this->userTestData);
         //Then
         $this->assertEquals("The two passwords you entered are not the same", $error);
     }
     */
 
-    public function checkUserHasBeenRegistered(){
+    public function checkUserHasBeenRegistered() : bool
+    {
         require_once "../../model/dbConnector.php";
-        $query = "SELECT email FROM accounts WHERE email ='" . $this->registerData['userEmail'] ."';";
+        $query = "SELECT email FROM accounts WHERE email ='" . $this->userTestData['userEmail'] ."';";
         $queryResult = executeQueryReturn($query);
         if(count($queryResult) == 1){
             return true;
@@ -54,7 +64,7 @@ class testUserController extends TestCase
     public function cleanUser(){
         require_once "../../model/dbConnector.php";
         try {
-            $query = "DELETE FROM accounts WHERE email ='" . $this->registerData['userEmail'] ."';";
+            $query = "DELETE FROM accounts WHERE email ='" . $this->userTestData['userEmail'] ."';";
             executeQuery($query);
         }
         catch (databaseException){
@@ -66,7 +76,7 @@ class testUserController extends TestCase
     {
         // clean
         require_once "../../model/userModel.php";
-        if (doesMemberExist($this->registerData["userEmail"])){
+        if (doesMemberExist($this->userTestData["userEmail"])){
             $this->cleanUser();
         }
     }
