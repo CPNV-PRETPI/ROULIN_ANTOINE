@@ -3,7 +3,7 @@
 * @file      navigation.php
 * @brief     This file is the controller managing all actions that concern user
 * @author    Created by Antoine Roulin
-* @version   01.03.2023
+* @version   05.03.2023
 */
 
 /**
