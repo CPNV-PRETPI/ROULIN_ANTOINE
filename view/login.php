@@ -8,14 +8,22 @@
 </head>
 <body>
 <?php if(isset($error)):?>
-    <p><?= $error;?></p>
+    <div class="toast position-fixed top-0 end-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Error</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <?= $error;?>
+        </div>
+    </div>
 <?php endif;?>
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h1 class="text-center text-dark mt-5">Login</h1>
             <div class="card my-5">
-                <form class="card-body cardbody-color p-lg-5">
+                <form class="card-body cardbody-color p-lg-5" method="post" action="../index.php?action=login">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" name="userEmail" placeholder="Type your email here" aria-describedby="emailHelp">
