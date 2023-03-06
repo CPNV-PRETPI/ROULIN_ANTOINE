@@ -27,19 +27,19 @@
                 <form class="card-body cardbody-color p-lg-5" method="post" action="../index.php?action=register">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="userEmail" placeholder="Type your email here" aria-describedby="emailHelp">
+                        <input type="email" class="form-control" id="email" name="userEmail" placeholder="Type your email here" aria-describedby="emailHelp" required>
                     </div>
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="userUsername" placeholder="Type your username here">
+                        <input type="text" class="form-control" id="username" name="userUsername" placeholder="Type your username here" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="userPassword" placeholder="Type your password here">
+                        <input type="password" class="form-control" id="password" name="userPassword" placeholder="Type your password here" required>
                     </div>
                     <div class="mb-3">
                         <label for="userPasswordVerify" class="form-label">Password Verify</label>
-                        <input type="password" class="form-control" id="userPasswordVerify" name="userPasswordVerify" placeholder="Type your password again here">
+                        <input type="password" class="form-control" id="userPasswordVerify" name="userPasswordVerify" placeholder="Type your password again here" required>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary px-5 mb-1 w-100">Register</button>
