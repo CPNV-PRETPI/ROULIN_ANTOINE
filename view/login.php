@@ -36,7 +36,7 @@
                         <button type="submit" class="btn btn-primary px-5 mb-1 w-100">Login</button>
                     </div>
                     <div class="text-center">
-                        <a href="../index.php?action=home"><button type="button" class="btn btn-danger px-5 mb-5 w-100">Cancel</button></a>
+                        <a href="../index.php"><button type="button" class="btn btn-danger px-5 mb-5 w-100">Cancel</button></a>
                     </div>
                     <div id="emailHelp" class="form-text text-center mb-5 text-dark">
                         Not Registered ?
