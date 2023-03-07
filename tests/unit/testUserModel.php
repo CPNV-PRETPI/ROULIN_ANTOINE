@@ -87,7 +87,7 @@ class testUserModel extends TestCase
         addUser($this->userTestData);
         //When
         //Then
-        $this->expectException(memberAlreadyExist::class);
+        $this->expectException(MemberAlreadyExist::class);
         register($this->userTestData);
     }
 
@@ -96,7 +96,7 @@ class testUserModel extends TestCase
         $this->userTestData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Username of exactly 53 char, database expect max of 50 char
         //When
         //Then
-        $this->expectException(notMeetDatabaseRequirement::class);
+        $this->expectException(NotMeetDatabaseRequirement::class);
         register($this->userTestData);
     }
 
@@ -105,7 +105,7 @@ class testUserModel extends TestCase
         $this->userTestData['userPasswordVerify'] = 'NotTheSamePassword'; //Password not match the password given in the SetUp function
         //When
         //Then
-        $this->expectException(twoPasswordDontMatch::class);
+        $this->expectException(TwoPasswordDontMatch::class);
         register($this->userTestData);
     }
 

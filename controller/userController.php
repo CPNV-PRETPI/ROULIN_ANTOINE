@@ -13,25 +13,16 @@
  */
 function registerUser($registerData) : void
 {
-    if(
-        isset($registerData['userUsername']) &&
-        isset($registerData['userPassword']) &&
-        isset($registerData['userPasswordVerify']) &&
-        isset($registerData['userEmail'])
-    ){
         try {
             require_once dirname(__FILE__)."/../model/userModel.php";
             register($registerData);
+            $_SESSION['username'] = $registerData['userUsername']; //Set in the session the username of the member that just register to login him, this will be the variable I check everytime I need to know if the user is logged in
             require_once (dirname(__FILE__)."/../view/home.php");
         }
         catch (notMeetDatabaseRequirement|twoPasswordDontMatch|memberAlreadyExist|databaseException $e){
             $error = $e->getMessage(); //Set the variable $error by the message contained in the thrown exception to display after the content of $error in the view
             require_once (dirname(__FILE__)."/../view/register.php");
         }
-    } else {
-        $error = "One of the fields is empty, please fill it in"; //Set the variable $error a custom message if the form was not filled in completly
-        require_once (dirname(__FILE__)."/../view/register.php");
-    }
 }
 
 /**

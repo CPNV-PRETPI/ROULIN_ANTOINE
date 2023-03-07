@@ -17,22 +17,20 @@
  */
 function register($registerData) : void
 {
-    $checkDataResult = checkData($registerData);//Call this function to check if data entered in the form by user respect all constraint of the database and store the result of the function in the variable $checkDataResult.
-    $checkPasswordMatchResult = checkPasswordMatching($registerData); //Call this function to check if two password entered by user is the same and store the result of the function in the variable $checkPasswordMatchResult.
-    $checkDoesMemberExistResult = doesMemberExist($registerData['userEmail']); //Call this function to check if the email entered by the user already match with a user registered in the database.
-    if ($checkDataResult){ // If the result of the function checkData is true it will do the next check inside of the condition
-        if ($checkPasswordMatchResult){ // If the result of the function checkPasswordMatching is true it will do the next check inside of the condition
-            if (!$checkDoesMemberExistResult){ // If the result of the function doesMemberExist is false (user doesn't already exist) it will do the addUser function that is inside of the condition
-                addUser($registerData); //Call this function to add the new member
-                $_SESSION['username'] = $registerData['userUsername']; //Set in the session the username of the member that just register to login him, this will be the variable I check everytime I need to know if the user is logged in
-            } else {
-                throw new memberAlreadyExist("This account already exist");
-            }
-        } else {
-            throw new twoPasswordDontMatch("The two passwords you entered are not the same");
-        }
-    } else {
-        throw new notMeetDatabaseRequirement("The information you have entered does not meet the requested conditions");
+    checkRegister($registerData);
+    addUser($registerData); //Call this function to add the new member
+}
+
+function checkRegister($registerData) : void
+{
+    if (!checkData($registerData)){
+        throw new NotMeetDatabaseRequirement();
+    }
+    if (!checkPasswordMatching($registerData)){
+        throw new TwoPasswordDontMatch();
+    }
+    if (doesMemberExist($registerData['userEmail'])){
+        throw new MemberAlreadyExist();
     }
 }
 
@@ -79,11 +77,10 @@ function checkData($dataToCheck) : bool
         strlen($dataToCheck['userPassword']) <= 256 &&
         strlen($dataToCheck['userPasswordVerify']) <= 256 &&
         strlen($dataToCheck['userEmail']) <= 319
-    ) {
+    ){
         return true;
-    } else{
-        return false;
     }
+    return false;
 }
 
 /**
@@ -130,10 +127,10 @@ function addUser($registerData) : void
     $query = "INSERT INTO accounts VALUES (NULL,'" . $registerData['userEmail'] . "','" . $registerData['userUsername'] . "','" . $passwordHash . "');";
     executeQuery($query);
 }
-
-class notMeetDatabaseRequirement extends Exception{}
-class twoPasswordDontMatch extends Exception{}
-class memberAlreadyExist extends Exception{}
-class wrongLoginCredentials extends Exception{}
-class memberDoesntExist extends Exception{}
+class UserException extends Exception{}
+class NotMeetDatabaseRequirement extends UserException{}
+class TwoPasswordDontMatch extends UserException{}
+class MemberAlreadyExist extends UserException{}
+class WrongLoginCredentials extends UserException{}
+class MemberDoesntExist extends UserException{}
 
