@@ -19,8 +19,20 @@ function registerUser($registerData) : void
             $_SESSION['username'] = $registerData['userUsername']; //Set in the session the username of the member that just register to login him, this will be the variable I check everytime I need to know if the user is logged in
             require_once (dirname(__FILE__)."/../view/home.php");
         }
-        catch (notMeetDatabaseRequirement|twoPasswordDontMatch|memberAlreadyExist|databaseException $e){
-            $error = $e->getMessage(); //Set the variable $error by the message contained in the thrown exception to display after the content of $error in the view
+        catch (NotMeetDatabaseRequirement){
+            $error = "You have enter information that is too long";
+            require_once (dirname(__FILE__)."/../view/register.php");
+        }
+        catch (TwoPasswordDontMatch){
+            $error = "Two password given don't match";
+            require_once (dirname(__FILE__)."/../view/register.php");
+        }
+        catch (MemberAlreadyExist){
+            $error = "This email is already taken. Try another email.";
+            require_once (dirname(__FILE__)."/../view/register.php");
+        }
+        catch (DatabaseException){
+            $error = "An error occurred, please try later";
             require_once (dirname(__FILE__)."/../view/register.php");
         }
 }
