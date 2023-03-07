@@ -74,4 +74,4 @@ function executeQuery($query) : void
     $dbConnexion = null; //Closing connection to the DB
 }
 
-class databaseException extends Exception{} //Create a custom class databaseException that extends the main class Exception
+class DatabaseException extends Exception{} //Create a custom class databaseException that extends the main class Exception
