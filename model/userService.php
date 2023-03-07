@@ -1,6 +1,6 @@
 <?php
 /**
- * @file      userModel.php
+ * @file      userController.php
  * @brief     This file is the model is used to do all actions
  * @author    Created by Antoine Roulin
  * @version   05.03.2023
@@ -10,10 +10,10 @@
  * @brief This function will go through all verifications proccess and if all conditions is respected it will register the user using addUser function
  * @param $registerData
  * @return void
- * @throws databaseException
- * @throws memberAlreadyExist
- * @throws notMeetDatabaseRequirement
- * @throws twoPasswordDontMatch
+ * @throws DatabaseException
+ * @throws MemberAlreadyExist
+ * @throws NotMeetDatabaseRequirement
+ * @throws TwoPasswordDontMatch
  */
 function register($registerData) : void
 {
@@ -38,9 +38,9 @@ function checkRegister($registerData) : void
  * @brief Check if credentials given by user match with a user in database and if not, it will throw thiUserDoesntExist
  * @param $loginData
  * @return void
- * @throws databaseException
- * @throws wrongLoginCredentials
- * @throws memberDoesntExist
+ * @throws DatabaseException
+ * @throws WrongLoginCredentials
+ * @throws MemberDoesntExist
  */
 function login($loginData) : void
 {
@@ -101,7 +101,7 @@ function checkPasswordMatching($passwordToCheckMatching) : bool
  * @brief This function is designed to check if the email entered by the user already match with an email of a user registered in the database.
  * @param $email
  * @return bool
- * @throws databaseException
+ * @throws DatabaseException
  */
 function doesMemberExist($email) : bool
 {
@@ -118,7 +118,7 @@ function doesMemberExist($email) : bool
  * @brief This function is designed to add a new user in the database.
  * @param $registerData
  * @return void
- * @throws databaseException
+ * @throws DatabaseException
  */
 function addUser($registerData) : void
 {

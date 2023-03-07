@@ -14,7 +14,7 @@
 function registerUser($registerData) : void
 {
         try {
-            require_once dirname(__FILE__)."/../model/userModel.php";
+            require_once dirname(__FILE__) . "/../model/userService.php";
             register($registerData);
             $_SESSION['username'] = $registerData['userUsername']; //Set in the session the username of the member that just register to login him, this will be the variable I check everytime I need to know if the user is logged in
             require_once (dirname(__FILE__)."/../view/home.php");
@@ -46,7 +46,7 @@ function loginUser($loginData) : void
 {
     if(isset($loginData['userEmail']) && isset($loginData['userPassword'])){
         try {
-            require_once dirname(__FILE__)."/../model/userModel.php";
+            require_once dirname(__FILE__) . "/../model/userService.php";
             login($loginData);
             require_once (dirname(__FILE__)."/../view/home.php");
         }
@@ -62,7 +62,7 @@ function loginUser($loginData) : void
 
 function logoutUser(): void
 {
-    require_once dirname(__FILE__)."/../model/userModel.php";
+    require_once dirname(__FILE__) . "/../model/userService.php";
     logout();
     require_once (dirname(__FILE__)."/../view/home.php");
 }

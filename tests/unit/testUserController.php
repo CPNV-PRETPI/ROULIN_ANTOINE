@@ -97,7 +97,7 @@ class testUserController extends TestCase
     public function tearDown(): void
     {
         // clean
-        require_once "../../model/userModel.php";
+        require_once "../../model/userService.php";
         if (doesMemberExist($this->userTestData["userEmail"])){
             $this->cleanUser();
         }

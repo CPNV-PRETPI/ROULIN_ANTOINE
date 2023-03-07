@@ -1,16 +1,16 @@
 <?php
 /**
- * @file      testUserModel.php
- * @brief     This file is the test file is used to test function that concern User in the userModel.php file
+ * @file      testUserService.php
+ * @brief     This file is the test file is used to test function that concern User in the userController.php file
  * @author    Created by Antoine Roulin
  * @version   05.03.2023
  */
 
 use PHPUnit\Framework\TestCase;
 
-require "../../model/userModel.php";
+require "../../model/userService.php";
 
-class testUserModel extends TestCase
+class testUserService extends TestCase
 {
     private array $userTestData = [];
     public function setUp(): void

@@ -9,7 +9,7 @@
 /**
  * @brief This function is designed to open and return a database connection
  * @return PDO
- * @throws databaseException
+ * @throws DatabaseException
  */
 function openDBConnexion() : PDO
 {
@@ -23,7 +23,7 @@ function openDBConnexion() : PDO
         $tempDBConnexion = new PDO($dsn, $credentials->userName, $credentials->userPwd);
     }
     catch(jsonFileException | PDOException){
-        throw new databaseException("An error has occurred, please try again later");
+        throw new DatabaseException("An error has occurred, please try again later");
     }
     return $tempDBConnexion;
 }
@@ -32,7 +32,7 @@ function openDBConnexion() : PDO
  * @brief This function is designed to execute a select query received as parameter
  * @param $query : the query to execute
  * @return array|null
- * @throws databaseException
+ * @throws DatabaseException
  * @link https://php.net/manual/en/pdo.prepare.php
  */
 function executeQueryReturn($query) : array|null
@@ -45,7 +45,7 @@ function executeQueryReturn($query) : array|null
         $queryResult = $statement->fetchAll();
     }
     else{
-        throw new databaseException("An error has occurred, please try again later");
+        throw new DatabaseException("An error has occurred, please try again later");
     }
     $dbConnexion = null; //Closing connection to the DB
     return $queryResult;
@@ -55,7 +55,7 @@ function executeQueryReturn($query) : array|null
  * @brief This function is designed to execute an insert query received as parameter
  * @param $query
  * @return void
- * @throws databaseException
+ * @throws DatabaseException
  */
 function executeQuery($query) : void
 {
@@ -65,11 +65,11 @@ function executeQuery($query) : void
         $statement = $dbConnexion->prepare($query); //Prepare the query
         $result = $statement->execute(); //Query execution
         if(!$result){ //If $result is false that tell that the query has not work
-            throw new databaseException("An error has occurred, please try again later");
+            throw new DatabaseException("An error has occurred, please try again later");
         }
     }
     else{
-        throw new databaseException("An error has occurred, please try again later");
+        throw new DatabaseException("An error has occurred, please try again later");
     }
     $dbConnexion = null; //Closing connection to the DB
 }
