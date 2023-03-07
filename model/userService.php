@@ -17,21 +17,8 @@
  */
 function register($registerData) : void
 {
-    checkRegister($registerData);
-    addUser($registerData); //Call this function to add the new member
-}
-
-function checkRegister($registerData) : void
-{
-    if (!checkData($registerData)){
-        throw new NotMeetDatabaseRequirement();
-    }
-    if (!checkPasswordMatching($registerData)){
-        throw new TwoPasswordDontMatch();
-    }
-    if (doesMemberExist($registerData['userEmail'])){
-        throw new MemberAlreadyExist();
-    }
+    checkRegister($registerData); //Check all requirement before adding new user to database
+    addUser($registerData); //Add new member to the database
 }
 
 /**
@@ -44,11 +31,11 @@ function checkRegister($registerData) : void
  */
 function login($loginData) : void
 {
-    require_once dirname(__FILE__)."/dbConnector.php";
+    require_once dirname(__FILE__) . "/dbConnector.php";
     $query = "SELECT * FROM accounts WHERE email ='" . $loginData['userEmail'] . "';";
     $loginQueryResult = executeQueryReturn($query);
-    if (isset($loginQueryResult[0]['password'])){
-        if (password_verify($loginData['userPassword'], $loginQueryResult[0]['password'])){
+    if (isset($loginQueryResult[0]['password'])) {
+        if (password_verify($loginData['userPassword'], $loginQueryResult[0]['password'])) {
             $_SESSION['username'] = $loginQueryResult[0]['username'];
         } else {
             throw new wrongLoginCredentials("Wrong email or password");
@@ -58,10 +45,26 @@ function login($loginData) : void
     }
 }
 
-function logout() : void
+/**
+ * @brief This function is designed to do all check and throw exceptions if check doesn't pass
+ * @param $registerData
+ * @return void
+ * @throws DatabaseException
+ * @throws MemberAlreadyExist
+ * @throws NotMeetDatabaseRequirement
+ * @throws TwoPasswordDontMatch
+ */
+function checkRegister($registerData) : void
 {
-    $_SESSION = null;
-    session_destroy();
+    if (!checkData($registerData)){
+        throw new NotMeetDatabaseRequirement();
+    }
+    if (!checkPasswordMatching($registerData)){
+        throw new TwoPasswordDontMatch();
+    }
+    if (doesMemberExist($registerData['userEmail'])){
+        throw new MemberAlreadyExist();
+    }
 }
 
 /**

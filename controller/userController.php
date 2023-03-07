@@ -60,11 +60,14 @@ function loginUser($loginData) : void
     }
 }
 
+/**
+ * @brief Logout the user connected
+ * @return void
+ */
 function logoutUser(): void
 {
-    require_once dirname(__FILE__) . "/../model/userService.php";
-    logout();
-    require_once (dirname(__FILE__)."/../view/home.php");
+    $_SESSION = null;
+    session_destroy();
 }
 
 

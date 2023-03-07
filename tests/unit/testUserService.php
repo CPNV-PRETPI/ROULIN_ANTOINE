@@ -143,28 +143,6 @@ class testUserService extends TestCase
         login($this->userTestData);
     }
 
-    public function testLogout_SessionComingFromRegister_Success(): void
-    {
-        //Given
-        register($this->userTestData);
-        //When
-        logout();
-        //Then
-        $this->assertEquals(null, $_SESSION);
-    }
-
-    public function testLogout_SessionComingFromLogin_Success(): void
-    {
-        //Given
-        register($this->userTestData);
-        logout();
-        //When
-        login($this->userTestData);
-        logout();
-        //Then
-        $this->assertEquals(null, $_SESSION);
-    }
-
     public function cleanUser(){
         require_once "../../model/dbConnector.php";
         try {
