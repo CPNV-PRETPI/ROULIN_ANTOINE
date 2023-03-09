@@ -68,6 +68,7 @@ function logoutUser(): void
 {
     $_SESSION = null;
     session_destroy();
+    require_once (dirname(__FILE__)."/../view/home.php");
 }
 
 
