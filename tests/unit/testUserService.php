@@ -128,7 +128,7 @@ class testUserService extends TestCase
         //Given
         //When
         //Then
-        $this->expectException(memberDoesntExist::class);
+        $this->expectException(MemberDoesntExist::class);
         login($this->userTestData);
     }
 
@@ -139,8 +139,35 @@ class testUserService extends TestCase
         $this->userTestData['userPassword'] = "NotTheSamePassword"; //Set userTestData['userPassword'] with not the password of the member this member in the database
         //When
         //Then
-        $this->expectException(wrongLoginCredentials::class);
+        $this->expectException(WrongLoginCredentials::class);
         login($this->userTestData);
+    }
+
+    public function testCheckRegister_NotMeetDatabaseRequirementThrown_Success() : void {
+        //Given
+        $this->userTestData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Username of exactly 53 char, database expect max of 50 char
+        //When
+        //Then
+        $this->expectException(NotMeetDatabaseRequirement::class);
+        checkRegister($this->userTestData);
+    }
+
+    public function testCheckRegister_TwoPasswordDontMatchThrown_Success() : void {
+        //Given
+        $this->userTestData['userPasswordVerify'] = 'NotSamePassword';
+        //When
+        //Then
+        $this->expectException(TwoPasswordDontMatch::class);
+        checkRegister($this->userTestData);
+    }
+
+    public function testCheckRegister_MemberAlreadyExistThrown_Success() : void {
+        //Given
+        addUser($this->userTestData);
+        //When
+        //Then
+        $this->expectException(MemberAlreadyExist::class);
+        checkRegister($this->userTestData);
     }
 
     public function cleanUser(){
