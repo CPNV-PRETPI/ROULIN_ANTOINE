@@ -34,15 +34,13 @@ function login($loginData) : void
     require_once dirname(__FILE__) . "/dbConnector.php";
     $query = "SELECT * FROM accounts WHERE email ='" . $loginData['userEmail'] . "';";
     $loginQueryResult = executeQueryReturn($query);
-    if (isset($loginQueryResult[0]['password'])) {
-        if (password_verify($loginData['userPassword'], $loginQueryResult[0]['password'])) {
-            $_SESSION['username'] = $loginQueryResult[0]['username'];
-        } else {
-            throw new wrongLoginCredentials("Wrong email or password");
-        }
-    } else {
+    if (!isset($loginQueryResult[0]['password'])) {
         throw new memberDoesntExist("This account doesn't exist");
     }
+    if (!password_verify($loginData['userPassword'], $loginQueryResult[0]['password'])) {
+        throw new wrongLoginCredentials("Wrong email or password");
+    }
+    $_SESSION['username'] = $loginQueryResult[0]['username'];
 }
 
 /**

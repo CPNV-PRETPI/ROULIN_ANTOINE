@@ -16,20 +16,15 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <?php if($_GET['action'] == "home"):?>
-                        <a class="nav-link active" aria-current="page" href="../index.php?action=home">Home</a>
-                    <?php else:?>
-                        <a class="nav-link" aria-current="page" href="../index.php?action=home">Home</a>
-                    <?php endif;?>
-
+                    <a class="nav-link active" aria-current="page" href="../index.php?action=home">Home</a>
                 </li>
             </ul>
             <?php if(isset($_SESSION['username'])):?>
                 <div class="text-white m-2"><?= $_SESSION['username'];?></div>
-                <a href="../index.php?action=logout"><button class="btn btn-danger m-2" type="button">Login</button></a>
+                <a href="../index.php?action=logout"><button class="btn btn-danger m-1" type="button">Login</button></a>
             <?php else:?>
-                <a href="../index.php?action=displayLogin"><button class="btn btn-primary m-2" type="button">Login</button></a>
-                <a href="../index.php?action=displayRegister"><button class="btn btn-primary m-2" type="button">Register</button></a>
+                <a href="../index.php?action=displayLogin"><button class="btn btn-primary m-1" type="button">Login</button></a>
+                <a href="../index.php?action=displayRegister"><button class="btn btn-primary m-1" type="button">Register</button></a>
             <?php endif;?>
         </div>
     </div>
