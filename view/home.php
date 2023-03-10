@@ -21,7 +21,7 @@
             </ul>
             <?php if(isset($_SESSION['username'])):?>
                 <div class="text-white m-2"><?= $_SESSION['username'];?></div>
-                <a href="../index.php?action=logout"><button class="btn btn-danger m-1" type="button">Login</button></a>
+                <a href="../index.php?action=logout"><button class="btn btn-danger m-1" type="button">Logout</button></a>
             <?php else:?>
                 <a href="../index.php?action=displayLogin"><button class="btn btn-primary m-1" type="button">Login</button></a>
                 <a href="../index.php?action=displayRegister"><button class="btn btn-primary m-1" type="button">Register</button></a>

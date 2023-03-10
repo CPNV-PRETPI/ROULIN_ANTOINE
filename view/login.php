@@ -26,11 +26,11 @@
                 <form class="card-body cardbody-color p-lg-5" method="post" action="../index.php?action=login">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="userEmail" placeholder="Type your email here" aria-describedby="emailHelp">
+                        <input type="email" class="form-control" id="email" name="userEmail" placeholder="Type your email here" aria-describedby="emailHelp" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="userPassword" placeholder="Type your password here">
+                        <input type="password" class="form-control" id="password" name="userPassword" placeholder="Type your password here" required>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary px-5 mb-1 w-100">Login</button>
