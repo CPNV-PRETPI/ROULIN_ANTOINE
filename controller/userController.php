@@ -16,7 +16,7 @@ function registerUser($registerData) : void
         try {
             require_once dirname(__FILE__) . "/../model/userService.php";
             register($registerData);
-            $_SESSION['username'] = $registerData['userUsername']; //Set in the session the username of the member that just register to login him, this will be the variable I check everytime I need to know if the user is logged in
+            $_SESSION['username'] = $registerData['userUsername'];
             require_once (dirname(__FILE__)."/../view/home.php");
         }
         catch (NotMeetDatabaseRequirement){
@@ -51,11 +51,11 @@ function loginUser($loginData) : void
             require_once (dirname(__FILE__)."/../view/home.php");
         }
         catch (databaseException|wrongLoginCredentials|memberDoesntExist $e){
-            $error = $e->getMessage(); //Set the variable $error by the message contained in the thrown exception to display after the content of $error in the view
+            $error = $e->getMessage();
             require_once (dirname(__FILE__)."/../view/login.php");
         }
     } else {
-        $error = "One of the fields is empty, please fill it in"; //Set the variable $error a custom message if the form was not filled in completly
+        $error = "One of the fields is empty, please fill it in";
         require_once (dirname(__FILE__)."/../view/register.php");
     }
 }

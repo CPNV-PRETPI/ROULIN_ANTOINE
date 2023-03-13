@@ -17,7 +17,7 @@ function openDBConnexion() : PDO
 
     require_once dirname(__FILE__)."/jsonModel.php";
     try{
-        $credentials = readJson(dirname(__FILE__)."/dbCredentials.json"); //Attribute the return of readJson to the variable $credentials
+        $credentials = readJson(dirname(__FILE__)."/dbCredentials.json");
         $dsn = $credentials->sqlDriver. ":host=". $credentials->hostName . ";dbname=".
             $credentials->dbName.";port=".$credentials->port.";charset=".$credentials->charset;
         $tempDBConnexion = new PDO($dsn, $credentials->userName, $credentials->userPwd);
@@ -38,16 +38,16 @@ function openDBConnexion() : PDO
 function executeQueryReturn($query) : array|null
 {
     $queryResult = null;
-    $dbConnexion = openDBConnexion();//Opens DB connection
+    $dbConnexion = openDBConnexion();
     if ($dbConnexion != null){
-        $statement = $dbConnexion->prepare($query); //Prepare the query
-        $statement->execute(); //Query execution
+        $statement = $dbConnexion->prepare($query);
+        $statement->execute();
         $queryResult = $statement->fetchAll();
     }
     else{
         throw new DatabaseException("An error has occurred, please try again later");
     }
-    $dbConnexion = null; //Closing connection to the DB
+    $dbConnexion = null;
     return $queryResult;
 }
 
@@ -59,19 +59,19 @@ function executeQueryReturn($query) : array|null
  */
 function executeQuery($query) : void
 {
-    $dbConnexion = openDBConnexion(); //Opens DB connection
+    $dbConnexion = openDBConnexion();
     $result = false;
     if ($dbConnexion != null){
-        $statement = $dbConnexion->prepare($query); //Prepare the query
-        $result = $statement->execute(); //Query execution
-        if(!$result){ //If $result is false that tell that the query has not work
+        $statement = $dbConnexion->prepare($query);
+        $result = $statement->execute();
+        if(!$result){
             throw new DatabaseException("An error has occurred, please try again later");
         }
     }
     else{
         throw new DatabaseException("An error has occurred, please try again later");
     }
-    $dbConnexion = null; //Closing connection to the DB
+    $dbConnexion = null;
 }
 
-class DatabaseException extends Exception{} //Create a custom class databaseException that extends the main class Exception
+class DatabaseException extends Exception{}

@@ -17,8 +17,8 @@
  */
 function register($registerData) : void
 {
-    checkRegister($registerData); //Check all requirement before adding new user to database
-    addUser($registerData); //Add new member to the database
+    checkRegister($registerData);
+    addUser($registerData);
 }
 
 /**
@@ -72,7 +72,6 @@ function checkRegister($registerData) : void
  */
 function checkData($dataToCheck) : bool
 {
-    //Check if all field respect database constraint.
     if (
         strlen($dataToCheck['userUsername']) <= 50 &&
         strlen($dataToCheck['userPassword']) <= 256 &&

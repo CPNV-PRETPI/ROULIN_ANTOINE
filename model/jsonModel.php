@@ -13,18 +13,18 @@
  * @throws jsonFileException
  */
 function readJson($fileName){
-    if (file_exists($fileName)) { //Check if file exist
-        $file = fopen($fileName, "r"); //Create a pointer on the file of $fileName in read mode and attribute it to $file variable
-        if (!($file)) { //Checking if the file exists
-            throw new jsonFileException(); //Throw new exception of type jsonFileException
+    if (file_exists($fileName)) {
+        $file = fopen($fileName, "r");
+        if (!($file)) {
+            throw new jsonFileException();
         } else {
-            $fileContent = fread($file, filesize($fileName)); //Gets the content of the file
-            return json_decode($fileContent); //Decode the content from Json ton php objects
+            $fileContent = fread($file, filesize($fileName));
+            return json_decode($fileContent);
         }
     }
     else{
-        throw new jsonFileException(); //Throw new exception of type jsonFileException
+        throw new jsonFileException();
     }
 }
 
-class jsonFileException extends Exception{} //Create a custom class jsonFileException that extends the main class Exception
+class jsonFileException extends Exception{}
