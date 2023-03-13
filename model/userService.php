@@ -25,22 +25,27 @@ function register($registerData) : void
  * @brief Check if credentials given by user match with a user in database and if not, it will throw thiUserDoesntExist
  * @param $loginData
  * @return void
- * @throws DatabaseException
  * @throws WrongLoginCredentials
  * @throws MemberDoesntExist
+ * @throws SystemNotAvailable
+ * @throws DatabaseException
  */
 function login($loginData) : void
 {
-    require_once dirname(__FILE__) . "/dbConnector.php";
-    $query = "SELECT * FROM accounts WHERE email ='" . $loginData['userEmail'] . "';";
-    $loginQueryResult = executeQueryReturn($query);
-    if (!$loginQueryResult[0]['email']) {
-        throw new MemberDoesntExist("This account doesn't exist");
+    try {
+        require_once dirname(__FILE__) . "/dbConnector.php";
+        $query = "SELECT password FROM accounts WHERE email ='" . $loginData['userEmail'] . "';";
+        $queryResult = executeQuery($query);
+        if ($queryResult == null) {
+            throw new MemberDoesntExist();
+        }
+        if (!password_verify($loginData['userPassword'], $queryResult[0]['password'])) {
+            throw new WrongLoginCredentials();
+        }
     }
-    if (!password_verify($loginData['userPassword'], $loginQueryResult[0]['password'])) {
-        throw new WrongLoginCredentials("Wrong email or password");
+    catch(PDOException $e){
+        throw new SystemNotAvailable();
     }
-    $_SESSION['username'] = $loginQueryResult[0]['username'];
 }
 
 /**
@@ -128,6 +133,7 @@ function addUser($registerData) : void
     executeQuery($query);
 }
 class UserException extends Exception{}
+class SystemNotAvailable extends UserException{}
 class NotMeetDatabaseRequirement extends UserException{}
 class TwoPasswordDontMatch extends UserException{}
 class MemberAlreadyExist extends UserException{}

@@ -35,7 +35,7 @@ function openDBConnexion() : PDO
  * @throws DatabaseException
  * @link https://php.net/manual/en/pdo.prepare.php
  */
-function executeQueryReturn($query) : array|null
+function executeQuery($query) : array|null
 {
     $queryResult = null;
     $dbConnexion = openDBConnexion();
@@ -57,7 +57,7 @@ function executeQueryReturn($query) : array|null
  * @return void
  * @throws DatabaseException
  */
-function executeQuery($query) : void
+/*function executeQuery($query) : void
 {
     $dbConnexion = openDBConnexion();
     $result = false;
@@ -72,6 +72,6 @@ function executeQuery($query) : void
         throw new DatabaseException("An error has occurred, please try again later");
     }
     $dbConnexion = null;
-}
+}*/
 
 class DatabaseException extends Exception{}

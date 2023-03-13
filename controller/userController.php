@@ -44,19 +44,27 @@ function registerUser($registerData) : void
  */
 function loginUser($loginData) : void
 {
-    if(isset($loginData['userEmail']) && isset($loginData['userPassword'])){
-        try {
+    try {
+        if(isset($loginData['userEmail']) && isset($loginData['userPassword'])){
             require_once dirname(__FILE__) . "/../model/userService.php";
             login($loginData);
+            $_SESSION['email'] = $loginData['userEmail'];
             require_once (dirname(__FILE__)."/../view/home.php");
-        }
-        catch (databaseException|wrongLoginCredentials|memberDoesntExist $e){
-            $error = $e->getMessage();
+        } else {
             require_once (dirname(__FILE__)."/../view/login.php");
         }
-    } else {
-        $error = "One of the fields is empty, please fill it in";
-        require_once (dirname(__FILE__)."/../view/register.php");
+    }
+    catch (SystemNotAvailable $e){
+        $error = "System not available";
+        require_once (dirname(__FILE__)."/../view/login.php");
+    }
+    catch (MemberDoesntExist $e){
+        $error = "Member doesn't exist";
+        require_once (dirname(__FILE__)."/../view/login.php");
+    }
+    catch (WrongLoginCredentials $e){
+        $error = "Wrong email or password";
+        require_once (dirname(__FILE__)."/../view/login.php");
     }
 }
 

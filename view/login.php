@@ -7,22 +7,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
-<?php if(isset($error)):?>
-    <div class="toast position-fixed top-0 end-0 show" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Error</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            <?= $error;?>
-        </div>
-    </div>
-<?php endif;?>
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h1 class="text-center text-dark mt-5">Login</h1>
             <div class="card my-5">
+                <?php if(isset($error)):?>
+                    <div class="alert alert-warning m-1" role="alert">
+                        <?= $error;?>
+                    </div>
+                <?php endif;?>
                 <form class="card-body cardbody-color p-lg-5" method="post" action="../index.php?action=login">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>

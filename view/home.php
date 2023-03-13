@@ -19,12 +19,12 @@
                     <a class="nav-link active" aria-current="page" href="../index.php?action=home">Home</a>
                 </li>
             </ul>
-            <?php if(isset($_SESSION['username'])):?>
-                <div class="text-white m-2"><?= $_SESSION['username'];?></div>
+            <?php if(isset($_SESSION['email'])):?>
+                <div class="text-white m-2"><?= $_SESSION['email'];?></div>
                 <a href="../index.php?action=logout"><button class="btn btn-danger m-1" type="button">Logout</button></a>
             <?php else:?>
-                <a href="../index.php?action=displayLogin"><button class="btn btn-primary m-1" type="button">Login</button></a>
-                <a href="../index.php?action=displayRegister"><button class="btn btn-primary m-1" type="button">Register</button></a>
+                <a href="../index.php?action=login"><button class="btn btn-primary m-1" type="button">Login</button></a>
+                <a href="../index.php?action=register"><button class="btn btn-primary m-1" type="button">Register</button></a>
             <?php endif;?>
         </div>
     </div>
