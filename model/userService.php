@@ -1,34 +1,38 @@
 <?php
 /**
- * @file      userController.php
+ * @file      userService.php
  * @brief     This file is the model is used to do all actions
  * @author    Created by Antoine Roulin
- * @version   05.03.2023
+ * @version   14.03.2023
  */
 
 /**
- * @brief This function will go through all verifications proccess and if all conditions is respected it will register the user using addUser function
+ * @brief This function will go through all verifications proccess and if all conditions is respected it will register
+ * the user using addUser function.
  * @param $registerData
  * @return void
- * @throws DatabaseException
- * @throws MemberAlreadyExist
- * @throws NotMeetDatabaseRequirement
- * @throws TwoPasswordDontMatch
+ * @throws RegisterException
+ * @throws SystemNotAvailable
  */
 function register($registerData) : void
 {
-    checkRegister($registerData);
-    addUser($registerData);
+    try {
+        checkRegister($registerData);
+        addUser($registerData);
+    }
+    catch (PDOException|JsonFileException){
+        throw new SystemNotAvailable();
+    }
 }
 
 /**
- * @brief Check if credentials given by user match with a user in database and if not, it will throw thiUserDoesntExist
+ * @brief Check if credentials given by user match with a user in database and if password given match with the password
+ * in database of the user given and if not, it will throw this UserDoesntExist.
  * @param $loginData
  * @return void
- * @throws WrongLoginCredentials
  * @throws MemberDoesntExist
  * @throws SystemNotAvailable
- * @throws DatabaseException
+ * @throws WrongLoginCredentials
  */
 function login($loginData) : void
 {
@@ -43,35 +47,34 @@ function login($loginData) : void
             throw new WrongLoginCredentials();
         }
     }
-    catch(PDOException $e){
+    catch(PDOException|JsonFileException){
         throw new SystemNotAvailable();
     }
 }
 
 /**
- * @brief This function is designed to do all check and throw exceptions if check doesn't pass
+ * @brief This function is designed to do all check and throw exceptions if check doesn't pass.
  * @param $registerData
  * @return void
- * @throws DatabaseException
- * @throws MemberAlreadyExist
- * @throws NotMeetDatabaseRequirement
- * @throws TwoPasswordDontMatch
+ * @throws RegisterException
+ * @throws jsonFileException
  */
 function checkRegister($registerData) : void
 {
     if (!checkData($registerData)){
-        throw new NotMeetDatabaseRequirement();
+        throw new RegisterException();
     }
     if (!checkPasswordMatching($registerData)){
-        throw new TwoPasswordDontMatch();
+        throw new RegisterException();
     }
     if (doesMemberExist($registerData['userEmail'])){
-        throw new MemberAlreadyExist();
+        throw new RegisterException();
     }
 }
 
 /**
- * @brief Check if data entered in the form by user respect all constraint of the database and if all field requiered is fill of data.
+ * @brief Check if data entered in the form by user respect all constraint of the database and if all field required is
+ * fill of data.
  * @param $dataToCheck
  * @return bool
  */
@@ -89,7 +92,7 @@ function checkData($dataToCheck) : bool
 }
 
 /**
- * @brief This function will check if both password entered by the user is matching (same)
+ * @brief This function will check if both password entered by the user is matching (same).
  * @param $passwordToCheckMatching
  * @return bool
  */
@@ -103,16 +106,17 @@ function checkPasswordMatching($passwordToCheckMatching) : bool
 }
 
 /**
- * @brief This function is designed to check if the email entered by the user already match with an email of a user registered in the database.
+ * @brief This function is designed to check if the email entered by the user already match with an email of a user
+ * registered in the database.
  * @param $email
  * @return bool
- * @throws DatabaseException
+ * @throws jsonFileException
  */
 function doesMemberExist($email) : bool
 {
     require_once dirname(__FILE__)."/dbConnector.php";
     $query = "SELECT email FROM accounts WHERE email ='" . $email . "';";
-    $queryResult = executeQueryReturn($query);
+    $queryResult = executeQuery($query);
     if(count($queryResult) == 1){
         return true;
     }
@@ -123,19 +127,25 @@ function doesMemberExist($email) : bool
  * @brief This function is designed to add a new user in the database.
  * @param $registerData
  * @return void
- * @throws DatabaseException
+ * @throws jsonFileException
  */
 function addUser($registerData) : void
 {
     require_once dirname(__FILE__)."/dbConnector.php";
     $passwordHash = password_hash($registerData['userPassword'], PASSWORD_DEFAULT);
-    $query = "INSERT INTO accounts VALUES (NULL,'" . $registerData['userEmail'] . "','" . $registerData['userUsername'] . "','" . $passwordHash . "');";
+    $query = "
+        INSERT INTO accounts
+        VALUES (
+            NULL,
+            '" . $registerData['userEmail'] . "',
+            '" . $registerData['userUsername'] . "',
+            '" . $passwordHash . "'
+        );";
     executeQuery($query);
 }
 class UserException extends Exception{}
 class SystemNotAvailable extends UserException{}
-class NotMeetDatabaseRequirement extends UserException{}
-class TwoPasswordDontMatch extends UserException{}
+class RegisterException extends UserException{}
 class MemberAlreadyExist extends UserException{}
 class WrongLoginCredentials extends UserException{}
 class MemberDoesntExist extends UserException{}
