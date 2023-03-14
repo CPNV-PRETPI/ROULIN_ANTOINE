@@ -34,7 +34,7 @@
                     </div>
                     <div id="emailHelp" class="form-text text-center mb-5 text-dark">
                         Not Registered ?
-                        <a href="../index.php?action=displayRegister" class="text-dark fw-bold"> Create an Account</a>
+                        <a href="../index.php?action=register" class="text-dark fw-bold"> Create an Account</a>
                     </div>
                 </form>
             </div>
