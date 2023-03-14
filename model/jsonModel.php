@@ -12,7 +12,8 @@
  * @return mixed
  * @throws jsonFileException
  */
-function readJson($fileName){
+function readJson($fileName): mixed
+{
     if (file_exists($fileName)) {
         $file = fopen($fileName, "r");
         if (!($file)) {
