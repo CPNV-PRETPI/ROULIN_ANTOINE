@@ -26,6 +26,7 @@ if(isset($_GET['action'])){
         case "logout":
             logoutUser();
             break;
+        //TODO Missing default case (Idea -> Lost page ?)
     }
 }
 else{

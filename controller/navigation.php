@@ -13,20 +13,3 @@ function home() : void
 {
     require_once dirname(__FILE__)."/../view/home.php";
 }
-
-/**
- * @brief This function is designed to redirect the user on the login page when requested
- */
-function displayLogin() : void
-{
-    require_once dirname(__FILE__)."/../view/login.php";
-}
-
-/**
- * @brief This function is designed to redirect the user on the register page when requested
- */
-function displayRegister() : void
-{
-    require_once dirname(__FILE__)."/../view/register.php";
-}
-
