@@ -23,8 +23,8 @@ function readJson($fileName){
         }
     }
     else{
-        throw new jsonFileException();
+        throw new JsonFileException();
     }
 }
 
-class jsonFileException extends Exception{}
+class JsonFileException extends Exception{}
