@@ -117,7 +117,7 @@ function doesMemberExist($email) : bool
     require_once dirname(__FILE__)."/dbConnector.php";
     $query = "SELECT email FROM accounts WHERE email ='" . $email . "';";
     $queryResult = executeQuery($query);
-    if(count($queryResult) == 1){
+    if($queryResult != null){
         return true;
     }
     return false;
@@ -146,7 +146,6 @@ function addUser($registerData) : void
 class UserException extends Exception{}
 class SystemNotAvailable extends UserException{}
 class RegisterException extends UserException{}
-class MemberAlreadyExist extends UserException{}
 class WrongLoginCredentials extends UserException{}
 class MemberDoesntExist extends UserException{}
 
