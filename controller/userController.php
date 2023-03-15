@@ -35,11 +35,12 @@ function registerUser($registerData) : void
                 Username need to be : 50 character or shorter \n
                 Password need to be : 255 character or shorter \n
                 Password Verify need to be : 255 character or shorter \n");
+            require_once (dirname(__FILE__)."/../view/register.php");
         }
         catch (SystemNotAvailable $e){
             $error = "System not available";
+            require_once (dirname(__FILE__)."/../view/register.php");
         }
-    require_once (dirname(__FILE__)."/../view/register.php");
 }
 
 /**
@@ -57,17 +58,18 @@ function loginUser($loginData) : void
             $_SESSION['email'] = $loginData['userEmail'];
             require_once (dirname(__FILE__)."/../view/home.php");
         }
+        require_once (dirname(__FILE__)."/../view/login.php");
     }
     catch (SystemNotAvailable $e){
         $error = "System not available";
+        require_once (dirname(__FILE__)."/../view/login.php");
     }
     catch (MemberDoesntExist $e){
         $error = "Member doesn't exist";
+        require_once (dirname(__FILE__)."/../view/login.php");
     }
     catch (WrongLoginCredentials $e){
         $error = "Wrong email or password";
-    }
-    finally {
         require_once (dirname(__FILE__)."/../view/login.php");
     }
 }
