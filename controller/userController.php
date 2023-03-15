@@ -66,7 +66,9 @@ function loginUser($loginData) : void
     catch (WrongLoginCredentials $e){
         $error = "Wrong email or password";
     }
-    require_once (dirname(__FILE__)."/../view/login.php");
+    finally {
+        require_once (dirname(__FILE__)."/../view/login.php");
+    }
 }
 
 /**
