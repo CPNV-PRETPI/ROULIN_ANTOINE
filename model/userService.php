@@ -17,6 +17,7 @@
 function register($registerData) : void
 {
     try {
+        require_once dirname(__FILE__)."/dbConnector.php";
         checkRegister($registerData);
         addUser($registerData);
     }
@@ -114,7 +115,6 @@ function checkPasswordMatching($passwordToCheckMatching) : bool
  */
 function doesMemberExist($email) : bool
 {
-    require_once dirname(__FILE__)."/dbConnector.php";
     $query = "SELECT email FROM accounts WHERE email ='" . $email . "';";
     $queryResult = executeQuery($query);
     if($queryResult != null){
@@ -131,7 +131,6 @@ function doesMemberExist($email) : bool
  */
 function addUser($registerData) : void
 {
-    require_once dirname(__FILE__)."/dbConnector.php";
     $passwordHash = password_hash($registerData['userPassword'], PASSWORD_DEFAULT);
     $query = "
         INSERT INTO accounts
