@@ -26,6 +26,7 @@ function registerUser($registerData) : void
                 $_SESSION['email'] = $registerData['userEmail'];
                 require_once (dirname(__FILE__)."/../view/home.php");
             }
+            require_once (dirname(__FILE__)."/../view/register.php");
         }
         catch (RegisterException $e){
             $error = nl2br(
@@ -34,11 +35,12 @@ function registerUser($registerData) : void
                 Username need to be : 50 character or shorter \n
                 Password need to be : 255 character or shorter \n
                 Password Verify need to be : 255 character or shorter \n");
+            require_once (dirname(__FILE__)."/../view/register.php");
         }
         catch (SystemNotAvailable $e){
             $error = "System not available";
+            require_once (dirname(__FILE__)."/../view/register.php");
         }
-    require_once (dirname(__FILE__)."/../view/register.php");
 }
 
 /**
