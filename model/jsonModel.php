@@ -7,7 +7,8 @@
  */
 
 /**
- * @brief This function is designed to open the Json file in read mode, read it and return the content decoded
+ * @brief This function is designed to open the Json file in read mode,
+ * read it and return the content decoded
  * @param $fileName
  * @return mixed
  * @throws jsonFileException

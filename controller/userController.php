@@ -7,8 +7,9 @@
 */
 
 /**
- * @brief This function is designed to check if user : fill correctly all field, email entered by user doesn't match
- * with a email user already registered and if all is ok it register the new member in the database.
+ * @brief This function is designed to check if user : fill correctly all fields,
+ * email entered by user doesn't match with a email user already registered
+ * and if all is ok it register the new member in the database.
  * @param $registerData
  * @return void
  */
@@ -25,6 +26,7 @@ function registerUser($registerData) : void
                 $_SESSION['email'] = $registerData['userEmail'];
                 require_once (dirname(__FILE__)."/../view/home.php");
             }
+            require_once (dirname(__FILE__)."/../view/register.php");
         }
         catch (RegisterException $e){
             $error = nl2br(

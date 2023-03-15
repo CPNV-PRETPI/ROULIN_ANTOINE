@@ -7,8 +7,9 @@
  */
 
 /**
- * @brief This function will go through all verifications proccess and if all conditions is respected it will register
- * the user using addUser function.
+ * @brief This function will go through all verifications process and
+ * if all conditions are respected it will register the user using
+ * addUser function.
  * @param $registerData
  * @return void
  * @throws RegisterException
@@ -101,9 +102,8 @@ function checkPasswordMatching($passwordToCheckMatching) : bool
 {
     if ($passwordToCheckMatching['userPassword'] == $passwordToCheckMatching['userPasswordVerify']) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 /**
