@@ -15,32 +15,32 @@
  */
 function registerUser($registerData) : void
 {
-        try {
-            if (isset($registerData['userEmail']) &&
-                isset($registerData['userUsername']) &&
-                isset($registerData['userPassword']) &&
-                isset($registerData['userPasswordVerify'])
-            ){
-                require_once dirname(__FILE__) . "/../model/userService.php";
-                register($registerData);
-                $_SESSION['email'] = $registerData['userEmail'];
-                require_once (dirname(__FILE__)."/../view/home.php");
-            }
-            require_once (dirname(__FILE__)."/../view/register.php");
+    try {
+        if (isset($registerData['userEmail']) &&
+            isset($registerData['userUsername']) &&
+            isset($registerData['userPassword']) &&
+            isset($registerData['userPasswordVerify'])
+        ){
+            require_once dirname(__FILE__) . "/../model/userService.php";
+            register($registerData);
+            $_SESSION['email'] = $registerData['userEmail'];
+            require_once (dirname(__FILE__)."/../view/home.php");
         }
-        catch (RegisterException $e){
-            $error = nl2br(
-                "<b>Register problem, please follow this rules :</b>\n
-                Email need to be : 319 character or shorter\n
-                Username need to be : 50 character or shorter \n
-                Password need to be : 255 character or shorter \n
-                Password Verify need to be : 255 character or shorter \n");
-            require_once (dirname(__FILE__)."/../view/register.php");
-        }
-        catch (SystemNotAvailable $e){
-            $error = "System not available";
-            require_once (dirname(__FILE__)."/../view/register.php");
-        }
+        require_once (dirname(__FILE__)."/../view/register.php");
+    }
+    catch (RegisterException $e){
+        $error = nl2br(
+            "<b>Register problem, please follow this rules :</b>\n
+            Email need to be : 319 character or shorter\n
+            Username need to be : 50 character or shorter \n
+            Password need to be : 255 character or shorter \n
+            Password Verify need to be : 255 character or shorter \n");
+        require_once (dirname(__FILE__)."/../view/register.php");
+    }
+    catch (SystemNotAvailable $e){
+        $error = "System not available";
+        require_once (dirname(__FILE__)."/../view/register.php");
+    }
 }
 
 /**
