@@ -3,12 +3,12 @@
 * @file      userController.php
 * @brief     This file is the controller managing all actions that concern user
 * @author    Created by Antoine Roulin
-* @version   14.03.2023
+* @version   16.03.2023
 */
 
 /**
  * @brief This function is designed to check if user : fill correctly all fields,
- * email entered by user doesn't match with a email user already registered
+ * email entered by user doesn't match with an email user already registered
  * and if all is ok it register the new member in the database.
  * @param $registerData
  * @return void
