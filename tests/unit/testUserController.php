@@ -36,7 +36,7 @@ class testUserController extends TestCase
         //When
         loginUser($this->userTestData);
         //Then
-        $this->assertEquals($this->userTestData['userUsername'],$_SESSION['username']);
+        $this->assertEquals($this->userTestData['userEmail'],$_SESSION['email']);
     }
 
     public function testLogout_SessionComingFromRegister_Success(): void
@@ -76,7 +76,7 @@ class testUserController extends TestCase
     {
         require_once "../../model/dbConnector.php";
         $query = "SELECT email FROM accounts WHERE email ='" . $this->userTestData['userEmail'] ."';";
-        $queryResult = executeQueryReturn($query);
+        $queryResult = executeQuery($query);
         if(count($queryResult) == 1){
             return true;
         }
@@ -85,13 +85,8 @@ class testUserController extends TestCase
 
     public function cleanUser(){
         require_once "../../model/dbConnector.php";
-        try {
-            $query = "DELETE FROM accounts WHERE email ='" . $this->userTestData['userEmail'] ."';";
-            executeQuery($query);
-        }
-        catch (databaseException){
-            print 'Database error';
-        }
+        $query = "DELETE FROM accounts WHERE email ='" . $this->userTestData['userEmail'] ."';";
+        executeQuery($query);
     }
 
     public function tearDown(): void

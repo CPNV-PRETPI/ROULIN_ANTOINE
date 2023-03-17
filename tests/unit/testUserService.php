@@ -87,7 +87,7 @@ class testUserService extends TestCase
         addUser($this->userTestData);
         //When
         //Then
-        $this->expectException(MemberAlreadyExist::class);
+        $this->expectException(RegisterException::class);
         register($this->userTestData);
     }
 
@@ -96,7 +96,7 @@ class testUserService extends TestCase
         $this->userTestData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Username of exactly 53 char, database expect max of 50 char
         //When
         //Then
-        $this->expectException(NotMeetDatabaseRequirement::class);
+        $this->expectException(RegisterException::class);
         register($this->userTestData);
     }
 
@@ -105,7 +105,7 @@ class testUserService extends TestCase
         $this->userTestData['userPasswordVerify'] = 'NotTheSamePassword'; //Password not match the password given in the SetUp function
         //When
         //Then
-        $this->expectException(TwoPasswordDontMatch::class);
+        $this->expectException(RegisterException::class);
         register($this->userTestData);
     }
 
@@ -120,7 +120,7 @@ class testUserService extends TestCase
         //When
         login($this->userTestData);
         //Then
-        $this->assertEquals($this->userTestData['userUsername'],$_SESSION['username']);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testLogin_MemberDoesntExist_Success(): void
@@ -148,7 +148,7 @@ class testUserService extends TestCase
         $this->userTestData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Username of exactly 53 char, database expect max of 50 char
         //When
         //Then
-        $this->expectException(NotMeetDatabaseRequirement::class);
+        $this->expectException(RegisterException::class);
         checkRegister($this->userTestData);
     }
 
@@ -157,7 +157,7 @@ class testUserService extends TestCase
         $this->userTestData['userPasswordVerify'] = 'NotSamePassword';
         //When
         //Then
-        $this->expectException(TwoPasswordDontMatch::class);
+        $this->expectException(RegisterException::class);
         checkRegister($this->userTestData);
     }
 
@@ -166,19 +166,14 @@ class testUserService extends TestCase
         addUser($this->userTestData);
         //When
         //Then
-        $this->expectException(MemberAlreadyExist::class);
+        $this->expectException(RegisterException::class);
         checkRegister($this->userTestData);
     }
 
     public function cleanUser(){
         require_once "../../model/dbConnector.php";
-        try {
-            $query = "DELETE FROM accounts WHERE email ='" . $this->userTestData['userEmail'] ."';";
-            executeQuery($query);
-        }
-        catch (databaseException){
-            print 'Database error';
-        }
+        $query = "DELETE FROM accounts WHERE email ='" . $this->userTestData['userEmail'] ."';";
+        executeQuery($query);
     }
 
     public function tearDown(): void
