@@ -25,8 +25,9 @@ function registerUser($registerData) : void
             register($registerData);
             $_SESSION['email'] = $registerData['userEmail'];
             require_once (dirname(__FILE__)."/../view/home.php");
+        } else {
+            require_once (dirname(__FILE__)."/../view/register.php");
         }
-        require_once (dirname(__FILE__)."/../view/register.php");
     }
     catch (RegisterException $e){
         $error = nl2br(
@@ -57,8 +58,9 @@ function loginUser($loginData) : void
             login($loginData);
             $_SESSION['email'] = $loginData['userEmail'];
             require_once (dirname(__FILE__)."/../view/home.php");
+        } else {
+            require_once (dirname(__FILE__)."/../view/login.php");
         }
-        require_once (dirname(__FILE__)."/../view/login.php");
     }
     catch (SystemNotAvailable $e){
         $error = "System not available";
