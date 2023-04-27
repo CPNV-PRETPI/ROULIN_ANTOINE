@@ -5,7 +5,7 @@
  * @author    Created by Antoine Roulin
  * @version   14.03.2023
  */
-
+include "User.php";
 /**
  * @brief This function will go through all verifications process and
  * if all conditions are respected it will register the user using
@@ -15,12 +15,14 @@
  * @throws RegisterException
  * @throws SystemNotAvailable
  */
-function register($registerData) : void
+function register($registerData) : User
 {
     try {
         require_once dirname(__FILE__)."/dbConnector.php";
         checkRegister($registerData);
-        addUser($registerData);
+        $user = new User($registerData['userEmail'], $registerData['userUsername']);
+        addUser($registerData['userPassword'], $user);
+        return $user;
     }
     catch (PDOException|JsonFileException){
         throw new SystemNotAvailable();
@@ -36,11 +38,11 @@ function register($registerData) : void
  * @throws SystemNotAvailable
  * @throws WrongLoginCredentials
  */
-function login($loginData) : void
+function login($loginData) : User
 {
     try {
         require_once dirname(__FILE__) . "/dbConnector.php";
-        $query = "SELECT password FROM accounts WHERE email ='" . $loginData['userEmail'] . "';";
+        $query = "SELECT email, username, password FROM accounts WHERE email ='" . $loginData['userEmail'] . "';";
         $queryResult = executeQuery($query);
         if ($queryResult == null) {
             throw new MemberDoesntExist();
@@ -48,6 +50,7 @@ function login($loginData) : void
         if (!password_verify($loginData['userPassword'], $queryResult[0]['password'])) {
             throw new WrongLoginCredentials();
         }
+        return new User($queryResult[0]['email'], $queryResult[0]['username']);
     }
     catch(PDOException|JsonFileException){
         throw new SystemNotAvailable();
@@ -130,18 +133,19 @@ function doesMemberExist($email) : bool
  * @return void
  * @throws jsonFileException
  */
-function addUser($registerData) : void
+function addUser($password, $user) : void
 {
     require_once dirname(__FILE__)."/dbConnector.php";
-    $passwordHash = password_hash($registerData['userPassword'], PASSWORD_DEFAULT);
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
     $query = "
         INSERT INTO accounts
         VALUES (
             NULL,
-            '" . $registerData['userEmail'] . "',
-            '" . $registerData['userUsername'] . "',
+            '" . $user->getEmail() . "',
+            '" . $user->getUsername() . "',
             '" . $passwordHash . "'
-        );";
+        );
+    ";
     executeQuery($query);
 }
 class UserException extends Exception{}
