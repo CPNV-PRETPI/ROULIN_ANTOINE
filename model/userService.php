@@ -20,7 +20,7 @@ function register($registerData) : User
     try {
         require_once dirname(__FILE__)."/dbConnector.php";
         checkRegister($registerData);
-        $user = new User($registerData['userUsername'], $registerData['userEmail']);
+        $user = new User($registerData['userEmail'], $registerData['userUsername']);
         addUser($registerData['userPassword'], $user);
         return $user;
     }
@@ -50,7 +50,7 @@ function login($loginData) : User
         if (!password_verify($loginData['userPassword'], $queryResult[0]['password'])) {
             throw new WrongLoginCredentials();
         }
-        return new User($queryResult[0]['username'], $queryResult[0]['email']);
+        return new User($queryResult[0]['email'], $queryResult[0]['username']);
     }
     catch(PDOException|JsonFileException){
         throw new SystemNotAvailable();

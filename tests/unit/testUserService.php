@@ -20,7 +20,7 @@ class testUserService extends TestCase
         $this->userTestData['userUsername'] = 'unittest';
         $this->userTestData['userPassword'] = '1234';
         $this->userTestData['userPasswordVerify'] = '1234';
-        $this->user = new User($this->userTestData['userUsername'], $this->userTestData['userEmail']);
+        $this->user = new User($this->userTestData['userEmail'], $this->userTestData['userUsername']);
     }
 
     public function testCheckData_DataMeetDatabaseExpectation_Success(){
@@ -70,7 +70,6 @@ class testUserService extends TestCase
 
     public function testAddUser_NominalCase_Success(){
         //Given
-        $user = new User($this->userTestData['userEmail'], $this->userTestData['userUsername']);
         //When
         addUser($this->userTestData['userPassword'], $this->user);
         //Then
@@ -166,8 +165,7 @@ class testUserService extends TestCase
 
     public function testCheckRegister_MemberAlreadyExistThrown_Success() : void {
         //Given
-        $user = new User($this->userTestData['userEmail'], $this->userTestData['userUsername']);
-        addUser($this->userTestData['userPassword'], $user);
+        addUser($this->userTestData['userPassword'], $this->user);
         //When
         //Then
         $this->expectException(RegisterException::class);
