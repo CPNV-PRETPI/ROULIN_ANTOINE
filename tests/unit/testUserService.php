@@ -17,10 +17,9 @@ class testUserService extends TestCase
     public function setUp(): void
     {
         $this->userTestData['userEmail'] = 'unittest@test.ch';
-        $this->userTestData['userUsername'] = 'unittest';
         $this->userTestData['userPassword'] = '1234';
         $this->userTestData['userPasswordVerify'] = '1234';
-        $this->user = new User($this->userTestData['userEmail'], $this->userTestData['userUsername']);
+        $this->user = new User($this->userTestData['userEmail']);
     }
 
     public function testCheckData_DataMeetDatabaseExpectation_Success(){
@@ -32,7 +31,7 @@ class testUserService extends TestCase
 
     public function testCheckData_DataDoesntMeetDatabaseExpectation_Success(){
         //Given
-        $this->userTestData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Username of exactly 53 char, database expect max of 50 char
+        $this->userTestData['userEmail'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Email of exactly 53 char, database expect max of 50 char
         //When
         //Then
         $this->assertFalse(checkData($this->userTestData));
@@ -95,7 +94,7 @@ class testUserService extends TestCase
 
     public function testRegister_UserFormNotMeetDataBaseRequirement_ThrowException(){
         //Given
-        $this->userTestData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Username of exactly 53 char, database expect max of 50 char
+        $this->userTestData['userEmail'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Email of exactly 53 char, database expect max of 50 char
         //When
         //Then
         $this->expectException(RegisterException::class);
@@ -147,7 +146,7 @@ class testUserService extends TestCase
 
     public function testCheckRegister_NotMeetDatabaseRequirementThrown_Success() : void {
         //Given
-        $this->userTestData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Username of exactly 53 char, database expect max of 50 char
+        $this->userTestData['userEmail'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Email of exactly 53 char, database expect max of 50 char
         //When
         //Then
         $this->expectException(RegisterException::class);

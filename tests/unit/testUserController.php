@@ -17,7 +17,6 @@ class testUserController extends TestCase
     public function setUp(): void
     {
         $this->userTestData['userEmail'] = 'unittest@test.ch';
-        $this->userTestData['userUsername'] = 'unittest';
         $this->userTestData['userPassword'] = '1234';
         $this->userTestData['userPasswordVerify'] = '1234';
     }
