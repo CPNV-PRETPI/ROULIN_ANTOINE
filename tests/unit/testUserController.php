@@ -74,7 +74,7 @@ class testUserController extends TestCase
 
     public function checkUserHasBeenRegistered() : bool
     {
-        require_once "../../model/dbConnector.php";
+        require_once "../../model/data/dbConnector.php";
         $query = "SELECT email FROM accounts WHERE email ='" . $this->userTestData['userEmail'] ."';";
         $queryResult = executeQuery($query);
         if(count($queryResult) == 1){
@@ -84,7 +84,7 @@ class testUserController extends TestCase
     }
 
     public function cleanUser(){
-        require_once "../../model/dbConnector.php";
+        require_once "../../model/data/dbConnector.php";
         $query = "DELETE FROM accounts WHERE email ='" . $this->userTestData['userEmail'] ."';";
         executeQuery($query);
     }
@@ -92,7 +92,7 @@ class testUserController extends TestCase
     public function tearDown(): void
     {
         // clean
-        require_once "../../model/userService.php";
+        require_once "../../model/service/userService.php";
         if (doesMemberExist($this->userTestData["userEmail"])){
             $this->cleanUser();
         }

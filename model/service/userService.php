@@ -5,20 +5,20 @@
  * @author    Created by Antoine Roulin
  * @version   14.03.2023
  */
-include "User.php";
+include dirname(__FILE__) . "/../entity/User.php";
 /**
  * @brief This function will go through all verifications process and
  * if all conditions are respected it will register the user using
  * addUser function.
  * @param $registerData
- * @return void
+ * @return User
  * @throws RegisterException
  * @throws SystemNotAvailable
  */
 function register($registerData) : User
 {
     try {
-        require_once dirname(__FILE__)."/dbConnector.php";
+        require_once dirname(__FILE__) . "/../data/dbConnector.php";
         checkRegister($registerData);
         $user = new User($registerData['userEmail'], $registerData['userUsername']);
         addUser($registerData['userPassword'], $user);
@@ -33,7 +33,7 @@ function register($registerData) : User
  * @brief Check if credentials given by user match with a user in database and if password given match with the password
  * in database of the user given and if not, it will throw this UserDoesntExist.
  * @param $loginData
- * @return void
+ * @return User
  * @throws MemberDoesntExist
  * @throws SystemNotAvailable
  * @throws WrongLoginCredentials
@@ -41,7 +41,7 @@ function register($registerData) : User
 function login($loginData) : User
 {
     try {
-        require_once dirname(__FILE__) . "/dbConnector.php";
+        require_once dirname(__FILE__) . "/../data/dbConnector.php";
         $query = "SELECT email, username, password FROM accounts WHERE email ='" . $loginData['userEmail'] . "';";
         $queryResult = executeQuery($query);
         if ($queryResult == null) {
@@ -118,7 +118,7 @@ function checkPasswordMatching($passwordToCheckMatching) : bool
  */
 function doesMemberExist($email) : bool
 {
-    require_once dirname(__FILE__)."/dbConnector.php";
+    require_once dirname(__FILE__) . "/../data/dbConnector.php";
     $query = "SELECT email FROM accounts WHERE email ='" . $email . "';";
     $queryResult = executeQuery($query);
     if($queryResult != null){
@@ -135,7 +135,7 @@ function doesMemberExist($email) : bool
  */
 function addUser($password, $user) : void
 {
-    require_once dirname(__FILE__)."/dbConnector.php";
+    require_once dirname(__FILE__) . "/../data/dbConnector.php";
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
     $query = "
         INSERT INTO accounts

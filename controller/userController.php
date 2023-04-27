@@ -21,10 +21,10 @@ function registerUser($registerData) : void
             isset($registerData['userPassword']) &&
             isset($registerData['userPasswordVerify'])
         ){
-            require_once dirname(__FILE__) . "/../model/userService.php";
+            require_once dirname(__FILE__) . "/../model/service/userService.php";
             $user = register($registerData);
             $_SESSION['email'] = $user->getEmail();
-            require_once (dirname(__FILE__)."/../view/dashboard.php");
+            require_once (dirname(__FILE__)."/../view/home.php");
         } else {
             require_once (dirname(__FILE__)."/../view/register.php");
         }
@@ -54,10 +54,10 @@ function loginUser($loginData) : void
 {
     try {
         if(isset($loginData['userEmail']) && isset($loginData['userPassword'])){
-            require_once dirname(__FILE__) . "/../model/userService.php";
+            require_once dirname(__FILE__) . "/../model/service/userService.php";
             $user = login($loginData);
             $_SESSION['email'] = $user->getEmail();
-            require_once (dirname(__FILE__)."/../view/dashboard.php");
+            require_once (dirname(__FILE__)."/../view/home.php");
         } else {
             require_once (dirname(__FILE__)."/../view/login.php");
         }

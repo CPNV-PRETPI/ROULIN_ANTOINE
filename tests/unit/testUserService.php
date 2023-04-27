@@ -8,7 +8,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require "../../model/userService.php";
+require "../../model/service/userService.php";
 
 class testUserService extends TestCase
 {
@@ -173,7 +173,7 @@ class testUserService extends TestCase
     }
 
     public function cleanUser(){
-        require_once "../../model/dbConnector.php";
+        require_once "../../model/data/dbConnector.php";
         $query = "DELETE FROM accounts WHERE email ='" . $this->userTestData['userEmail'] ."';";
         executeQuery($query);
     }
