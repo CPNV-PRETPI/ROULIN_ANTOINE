@@ -60,17 +60,6 @@ class testUserController extends TestCase
         $this->assertEquals(null, $_SESSION);
     }
 
-    /* Try to create a test that test the RegisterUser function not in the nominal case
-    public function testRegisterUser_TwoPasswordNotMatch_Success(){
-        //Given
-        $this->userTestData['userPasswordVerify'] = '5678';
-        //When
-        registerUser($this->userTestData);
-        //Then
-        $this->assertEquals("The two passwords you entered are not the same", $error);
-    }
-    */
-
     public function checkUserHasBeenRegistered() : bool
     {
         require_once "../../model/data/dbConnector.php";

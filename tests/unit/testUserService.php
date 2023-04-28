@@ -31,7 +31,14 @@ class testUserService extends TestCase
 
     public function testCheckData_DataDoesntMeetDatabaseExpectation_Success(){
         //Given
-        $this->userTestData['userEmail'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Email of exactly 53 char, database expect max of 50 char
+        //Email of exactly 330 char, database expect max of 319 char for an email.
+        $this->userTestData['userEmail'] =
+            '
+            6kUabrunLtknLzea2n4nmnvpBYfTqDLWkQ6qPnePpv8y98aTgN28pUfQtfcXzMXkJTm8cG7GxqrMJFUU4uxLrW33UPYxLFpYraL5BLrE9Yw
+            9WJM3CwEPf6ZmEKxSJ4EmCj3dCgJnjcQcNGcsYS8Am46JLZ8NmG9ZgH7RemyrZ6WawjP8NEeHh8MPrasxnhtyegVmKpFvHgsxrgkBm5fukz
+            NR9k4g42aMjYuzn7eptgamqruErz7KtLCRzCEBcrevmSPvn6ucF69KueUdH89sNK5tBrmRZGr7kBuUDPSuxG7NqMrN3cNr8xapPkWUvxaV@
+            gmail.com
+            ';
         //When
         //Then
         $this->assertFalse(checkData($this->userTestData));
@@ -94,7 +101,14 @@ class testUserService extends TestCase
 
     public function testRegister_UserFormNotMeetDataBaseRequirement_ThrowException(){
         //Given
-        $this->userTestData['userEmail'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Email of exactly 53 char, database expect max of 50 char
+        //Email of exactly 330 char, database expect max of 319 char for an email.
+        $this->userTestData['userEmail'] =
+            '
+            6kUabrunLtknLzea2n4nmnvpBYfTqDLWkQ6qPnePpv8y98aTgN28pUfQtfcXzMXkJTm8cG7GxqrMJFUU4uxLrW33UPYxLFpYraL5BLrE9Yw
+            9WJM3CwEPf6ZmEKxSJ4EmCj3dCgJnjcQcNGcsYS8Am46JLZ8NmG9ZgH7RemyrZ6WawjP8NEeHh8MPrasxnhtyegVmKpFvHgsxrgkBm5fukz
+            NR9k4g42aMjYuzn7eptgamqruErz7KtLCRzCEBcrevmSPvn6ucF69KueUdH89sNK5tBrmRZGr7kBuUDPSuxG7NqMrN3cNr8xapPkWUvxaV@
+            gmail.com
+            ';
         //When
         //Then
         $this->expectException(RegisterException::class);

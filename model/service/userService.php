@@ -20,7 +20,7 @@ function register($registerData) : User
     try {
         require_once dirname(__FILE__) . "/../data/dbConnector.php";
         checkRegister($registerData);
-        $user = new User($registerData['userEmail'], $registerData['userUsername']);
+        $user = new User($registerData['userEmail']);
         addUser($registerData['userPassword'], $user);
         return $user;
     }
@@ -42,7 +42,7 @@ function login($loginData) : User
 {
     try {
         require_once dirname(__FILE__) . "/../data/dbConnector.php";
-        $query = "SELECT email, username, password FROM accounts WHERE email ='" . $loginData['userEmail'] . "';";
+        $query = "SELECT email, password FROM accounts WHERE email ='" . $loginData['userEmail'] . "';";
         $queryResult = executeQuery($query);
         if ($queryResult == null) {
             throw new MemberDoesntExist();
@@ -50,7 +50,7 @@ function login($loginData) : User
         if (!password_verify($loginData['userPassword'], $queryResult[0]['password'])) {
             throw new WrongLoginCredentials();
         }
-        return new User($queryResult[0]['email'], $queryResult[0]['username']);
+        return new User($queryResult[0]['email']);
     }
     catch(PDOException|JsonFileException){
         throw new SystemNotAvailable();
@@ -86,7 +86,6 @@ function checkRegister($registerData) : void
 function checkData($dataToCheck) : bool
 {
     if (
-        strlen($dataToCheck['userUsername']) <= 50 &&
         strlen($dataToCheck['userPassword']) <= 256 &&
         strlen($dataToCheck['userPasswordVerify']) <= 256 &&
         strlen($dataToCheck['userEmail']) <= 319
@@ -142,7 +141,6 @@ function addUser($password, $user) : void
         VALUES (
             NULL,
             '" . $user->getEmail() . "',
-            '" . $user->getUsername() . "',
             '" . $passwordHash . "'
         );
     ";
