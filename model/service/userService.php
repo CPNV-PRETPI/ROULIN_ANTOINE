@@ -5,24 +5,23 @@
  * @author    Created by Antoine Roulin
  * @version   14.03.2023
  */
-include "User.php";
+include dirname(__FILE__) . "/../entity/User.php";
 /**
  * @brief This function will go through all verifications process and
  * if all conditions are respected it will register the user using
  * addUser function.
  * @param $registerData
- * @return void
+ * @return User
  * @throws RegisterException
  * @throws SystemNotAvailable
  */
-function register($registerData) : User
+function register($registerData) : void
 {
     try {
-        require_once dirname(__FILE__)."/dbConnector.php";
+        require_once dirname(__FILE__) . "/../data/dbConnector.php";
         checkRegister($registerData);
-        $user = new User($registerData['userEmail'], $registerData['userUsername']);
-        addUser($registerData['userPassword'], $user);
-        return $user;
+        $user = new User($registerData['userEmail'], $registerData['userPassword']);
+        addUser($user);
     }
     catch (PDOException|JsonFileException){
         throw new SystemNotAvailable();
@@ -33,16 +32,16 @@ function register($registerData) : User
  * @brief Check if credentials given by user match with a user in database and if password given match with the password
  * in database of the user given and if not, it will throw this UserDoesntExist.
  * @param $loginData
- * @return void
+ * @return User
  * @throws MemberDoesntExist
  * @throws SystemNotAvailable
  * @throws WrongLoginCredentials
  */
-function login($loginData) : User
+function login($loginData) : void
 {
     try {
-        require_once dirname(__FILE__) . "/dbConnector.php";
-        $query = "SELECT email, username, password FROM accounts WHERE email ='" . $loginData['userEmail'] . "';";
+        require_once dirname(__FILE__) . "/../data/dbConnector.php";
+        $query = "SELECT email, password FROM accounts WHERE email ='" . $loginData['userEmail'] . "';";
         $queryResult = executeQuery($query);
         if ($queryResult == null) {
             throw new MemberDoesntExist();
@@ -50,7 +49,6 @@ function login($loginData) : User
         if (!password_verify($loginData['userPassword'], $queryResult[0]['password'])) {
             throw new WrongLoginCredentials();
         }
-        return new User($queryResult[0]['email'], $queryResult[0]['username']);
     }
     catch(PDOException|JsonFileException){
         throw new SystemNotAvailable();
@@ -86,7 +84,6 @@ function checkRegister($registerData) : void
 function checkData($dataToCheck) : bool
 {
     if (
-        strlen($dataToCheck['userUsername']) <= 50 &&
         strlen($dataToCheck['userPassword']) <= 256 &&
         strlen($dataToCheck['userPasswordVerify']) <= 256 &&
         strlen($dataToCheck['userEmail']) <= 319
@@ -118,7 +115,7 @@ function checkPasswordMatching($passwordToCheckMatching) : bool
  */
 function doesMemberExist($email) : bool
 {
-    require_once dirname(__FILE__)."/dbConnector.php";
+    require_once dirname(__FILE__) . "/../data/dbConnector.php";
     $query = "SELECT email FROM accounts WHERE email ='" . $email . "';";
     $queryResult = executeQuery($query);
     if($queryResult != null){
@@ -129,20 +126,19 @@ function doesMemberExist($email) : bool
 
 /**
  * @brief This function is designed to add a new user in the database.
- * @param $registerData
+ * @param $user
  * @return void
  * @throws jsonFileException
  */
-function addUser($password, $user) : void
+function addUser($user) : void
 {
-    require_once dirname(__FILE__)."/dbConnector.php";
-    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+    require_once dirname(__FILE__) . "/../data/dbConnector.php";
+    $passwordHash = password_hash($user->getPassword(), PASSWORD_DEFAULT);
     $query = "
         INSERT INTO accounts
         VALUES (
             NULL,
             '" . $user->getEmail() . "',
-            '" . $user->getUsername() . "',
             '" . $passwordHash . "'
         );
     ";

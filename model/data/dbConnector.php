@@ -13,9 +13,9 @@
  */
 function openDBConnexion() : PDO
 {
-    require_once dirname(__FILE__)."/jsonModel.php";
+    require_once dirname(__FILE__) . "/../jsonModel.php";
 
-    $credentials = readJson(dirname(__FILE__)."/dbCredentials.json");
+    $credentials = readJson(dirname(__FILE__) . "/../dbCredentials.json");
 
     $dsn = $credentials->sqlDriver. ":host=". $credentials->hostName . ";dbname=".
         $credentials->dbName.";port=".$credentials->port.";charset=".$credentials->charset;
@@ -35,7 +35,7 @@ function executeQuery($query) : array|null
 
     $statement = $dbConnexion->prepare($query);
     $statement->execute();
-    $queryResult = $statement->fetchAll();
+    $queryResult = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     $dbConnexion = null;
     return $queryResult;

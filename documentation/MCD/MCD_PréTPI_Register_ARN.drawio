@@ -1,1 +1,25 @@
-<mxfile host="app.diagrams.net" modified="2023-02-24T09:33:35.565Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="3AJANFx9dlGPGp7jR00q" version="20.8.21" type="device"><diagram id="GxyxlznmTocM9lX4iMIi" name="Page-1">3VdLc5swEP41TE/OgHBIcsR2nF7cSZNMk6uMZKxGICqEH/n1XYHAEIHbTOzpTH0w6NuVtO9dHH+a7O4kztYLQSh3kEt2jj9zEPJcFMBDI/sKCQK3AmLJiGE6AI/sjdY7DVowQvMOoxKCK5Z1wUikKY1UB8NSim2XbSV499YMx9QCHiPMbfSZEbWu0Gt0dcC/Uhav65u94KaiJLhmNprka0zEtgX5t44/lUKo6i3ZTSnXxqvtUu2bD1AbwSRN1d9smIxexg+X4fP9bvH2Mht9f6KXq5E5ZYN5YRR2UMDhvAlhGy202htLBL8KLelkKXajnL2xNHb8EDiWQhIqRwDDAujwv60MpameC0JdNpQME9LsRNnucCy8xeZZXr+U7xHQrJSpRlFHPLShUjHwW8hZnAKkRAZs2KwiMBKVAAjgW/HSDysG9vEna5XAY+bBqxRFSqi2l5a3cZheRCJhkXnneEn5BEevcblhKriAo2epSKnepqR4pTXoIN8tfw2lDiN9oRahxbkqfxoXqZrjhHGdNT+oJDjFBjYp4iGz7rvIDo3az2AkumtBJlTuqEiokntgMdSxidp9d7k95AByDbZuxf+1wbBJu7g5+BCZ8GKC8wOBiqxADaMIrK9yKxK6XtyumaKPGY40dQtFquvyf2cqdC5T+YM5XdTZExJJ85wCF00w460UK4YT8ZtIdCH/UijGWY4VLaTNtIBsBiZaGrW84p13wKiq64JuwpgsameGgepc5nSlT+hP+D53dwPiFB73Oh4PbI976Mb2eHAuj48tjz+BlantnePwf+gp78r9k6uuenLzbJ7yhhuuwktOm4ba6bleu0+2ZG/opsu2mOzGPdyVa817SKa7R4JznEE2lzzNarB7q6WAge89aLV0RbSNTVQcTjPN2jr9XoqfVLWKld7/qRMnBYmpuucYhkd59GAN2vJ/VqMnpiQ9pUKLKTC5E1zW9rIKExiMnanvhDfHLzqPgmHRbhOn0DBMlWCp1uxBFJylJ1PKzhhdAEdGsjLuB0SCAS1n4rgkn7xi415AEZjqqXl84aILePof11yDfZmp8ar6DAzXdiuw5+iBqRjm0vl8dhMEZxm2vJ6Cjvye3uuNP17SYXn4PCtprY9c//Y3</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2023-04-28T06:58:35.053Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36" etag="Y-KwS-iPjSehFsGb-s8U" version="21.1.1" type="device">
+  <diagram id="GxyxlznmTocM9lX4iMIi" name="Page-1">
+    <mxGraphModel dx="1026" dy="660" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="B-X4R5AWPxMzXD-QTe5f-1" value="&lt;div style=&quot;box-sizing: border-box ; width: 100% ; padding: 2px&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=center;overflow=fill;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fillColor=#ffffff;fontFamily=Verdana;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="40" y="40" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="B-X4R5AWPxMzXD-QTe5f-2" value="Accounts" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="40" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="B-X4R5AWPxMzXD-QTe5f-3" value="&lt;u&gt;Adresse email&lt;/u&gt;&lt;br&gt;Mot de passe" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="41" y="60" width="129" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="B-X4R5AWPxMzXD-QTe5f-4" value="Texte&lt;br&gt;Texte" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="170" y="60" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="B-X4R5AWPxMzXD-QTe5f-11" value="&lt;table border=&quot;1&quot; width=&quot;100%&quot; style=&quot;width: 100% ; height: 100% ; border-collapse: collapse&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;Projet&lt;/td&gt;&lt;td align=&quot;center&quot;&gt;BudgetPlanner&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;Titre&lt;/td&gt;&lt;td align=&quot;center&quot;&gt;MCD Base de donnée&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;Auteur&lt;/td&gt;&lt;td align=&quot;center&quot;&gt;Antoine Roulin&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;text-align: center&quot;&gt;Version&lt;/td&gt;&lt;td style=&quot;text-align: center&quot;&gt;v0.2, 28.04.2023&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;" style="text;html=1;overflow=fill;labelBackgroundColor=#FFD966;" parent="1" vertex="1">
+          <mxGeometry x="40" y="160" width="239" height="140" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

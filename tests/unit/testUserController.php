@@ -17,7 +17,6 @@ class testUserController extends TestCase
     public function setUp(): void
     {
         $this->userTestData['userEmail'] = 'unittest@test.ch';
-        $this->userTestData['userUsername'] = 'unittest';
         $this->userTestData['userPassword'] = '1234';
         $this->userTestData['userPasswordVerify'] = '1234';
     }
@@ -61,20 +60,9 @@ class testUserController extends TestCase
         $this->assertEquals(null, $_SESSION);
     }
 
-    /* Try to create a test that test the RegisterUser function not in the nominal case
-    public function testRegisterUser_TwoPasswordNotMatch_Success(){
-        //Given
-        $this->userTestData['userPasswordVerify'] = '5678';
-        //When
-        registerUser($this->userTestData);
-        //Then
-        $this->assertEquals("The two passwords you entered are not the same", $error);
-    }
-    */
-
     public function checkUserHasBeenRegistered() : bool
     {
-        require_once "../../model/dbConnector.php";
+        require_once "../../model/data/dbConnector.php";
         $query = "SELECT email FROM accounts WHERE email ='" . $this->userTestData['userEmail'] ."';";
         $queryResult = executeQuery($query);
         if(count($queryResult) == 1){
@@ -84,7 +72,7 @@ class testUserController extends TestCase
     }
 
     public function cleanUser(){
-        require_once "../../model/dbConnector.php";
+        require_once "../../model/data/dbConnector.php";
         $query = "DELETE FROM accounts WHERE email ='" . $this->userTestData['userEmail'] ."';";
         executeQuery($query);
     }
@@ -92,7 +80,7 @@ class testUserController extends TestCase
     public function tearDown(): void
     {
         // clean
-        require_once "../../model/userService.php";
+        require_once "../../model/service/userService.php";
         if (doesMemberExist($this->userTestData["userEmail"])){
             $this->cleanUser();
         }

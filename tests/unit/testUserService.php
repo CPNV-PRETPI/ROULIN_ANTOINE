@@ -8,7 +8,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require "../../model/userService.php";
+require "../../model/service/userService.php";
 
 class testUserService extends TestCase
 {
@@ -17,10 +17,9 @@ class testUserService extends TestCase
     public function setUp(): void
     {
         $this->userTestData['userEmail'] = 'unittest@test.ch';
-        $this->userTestData['userUsername'] = 'unittest';
         $this->userTestData['userPassword'] = '1234';
         $this->userTestData['userPasswordVerify'] = '1234';
-        $this->user = new User($this->userTestData['userEmail'], $this->userTestData['userUsername']);
+        $this->user = new User($this->userTestData['userEmail'], $this->userTestData['userPassword']);
     }
 
     public function testCheckData_DataMeetDatabaseExpectation_Success(){
@@ -32,7 +31,14 @@ class testUserService extends TestCase
 
     public function testCheckData_DataDoesntMeetDatabaseExpectation_Success(){
         //Given
-        $this->userTestData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Username of exactly 53 char, database expect max of 50 char
+        //Email of exactly 330 char, database expect max of 319 char for an email.
+        $this->userTestData['userEmail'] =
+            '
+            6kUabrunLtknLzea2n4nmnvpBYfTqDLWkQ6qPnePpv8y98aTgN28pUfQtfcXzMXkJTm8cG7GxqrMJFUU4uxLrW33UPYxLFpYraL5BLrE9Yw
+            9WJM3CwEPf6ZmEKxSJ4EmCj3dCgJnjcQcNGcsYS8Am46JLZ8NmG9ZgH7RemyrZ6WawjP8NEeHh8MPrasxnhtyegVmKpFvHgsxrgkBm5fukz
+            NR9k4g42aMjYuzn7eptgamqruErz7KtLCRzCEBcrevmSPvn6ucF69KueUdH89sNK5tBrmRZGr7kBuUDPSuxG7NqMrN3cNr8xapPkWUvxaV@
+            gmail.com
+            ';
         //When
         //Then
         $this->assertFalse(checkData($this->userTestData));
@@ -57,12 +63,12 @@ class testUserService extends TestCase
         //Given
         //When
         //Then
-        $this->assertFalse(doesMemberExist($this->userTestData['userEmail']));
+        $this->assertFalse(doesMemberExist($this->user->getEmail()));
     }
 
     public function testDoesMemberExist_UserAlreadyExist_Success(){
         //Given
-        addUser($this->userTestData['userPassword'], $this->user);
+        addUser($this->user);
         //When
         //Then
         $this->assertTrue(doesMemberExist($this->user->getEmail()));
@@ -71,7 +77,7 @@ class testUserService extends TestCase
     public function testAddUser_NominalCase_Success(){
         //Given
         //When
-        addUser($this->userTestData['userPassword'], $this->user);
+        addUser($this->user);
         //Then
         $this->assertTrue(doesMemberExist($this->user->getEmail()));
     }
@@ -81,12 +87,12 @@ class testUserService extends TestCase
         //When
         register($this->userTestData);
         //Then
-        $this->assertTrue(doesMemberExist($this->userTestData['userEmail']));
+        $this->assertTrue(doesMemberExist($this->user->getEmail()));
     }
 
     public function testRegister_UserAlreadyExist_ThrowException(){
         //Given
-        addUser($this->userTestData['userPassword'], $this->user);
+        addUser($this->user);
         //When
         //Then
         $this->expectException(RegisterException::class);
@@ -95,7 +101,14 @@ class testUserService extends TestCase
 
     public function testRegister_UserFormNotMeetDataBaseRequirement_ThrowException(){
         //Given
-        $this->userTestData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Username of exactly 53 char, database expect max of 50 char
+        //Email of exactly 330 char, database expect max of 319 char for an email.
+        $this->userTestData['userEmail'] =
+            '
+            6kUabrunLtknLzea2n4nmnvpBYfTqDLWkQ6qPnePpv8y98aTgN28pUfQtfcXzMXkJTm8cG7GxqrMJFUU4uxLrW33UPYxLFpYraL5BLrE9Yw
+            9WJM3CwEPf6ZmEKxSJ4EmCj3dCgJnjcQcNGcsYS8Am46JLZ8NmG9ZgH7RemyrZ6WawjP8NEeHh8MPrasxnhtyegVmKpFvHgsxrgkBm5fukz
+            NR9k4g42aMjYuzn7eptgamqruErz7KtLCRzCEBcrevmSPvn6ucF69KueUdH89sNK5tBrmRZGr7kBuUDPSuxG7NqMrN3cNr8xapPkWUvxaV@
+            gmail.com
+            ';
         //When
         //Then
         $this->expectException(RegisterException::class);
@@ -147,7 +160,14 @@ class testUserService extends TestCase
 
     public function testCheckRegister_NotMeetDatabaseRequirementThrown_Success() : void {
         //Given
-        $this->userTestData['userUsername'] = '5JeJMu3kn3JHgApatT9YqyUjCMPD7PaE7aycDhtRdnzQPtqBad212'; //Username of exactly 53 char, database expect max of 50 char
+        //Email of exactly 330 char, database expect max of 319 char for an email.
+        $this->userTestData['userEmail'] =
+            '
+            6kUabrunLtknLzea2n4nmnvpBYfTqDLWkQ6qPnePpv8y98aTgN28pUfQtfcXzMXkJTm8cG7GxqrMJFUU4uxLrW33UPYxLFpYraL5BLrE9Yw
+            9WJM3CwEPf6ZmEKxSJ4EmCj3dCgJnjcQcNGcsYS8Am46JLZ8NmG9ZgH7RemyrZ6WawjP8NEeHh8MPrasxnhtyegVmKpFvHgsxrgkBm5fukz
+            NR9k4g42aMjYuzn7eptgamqruErz7KtLCRzCEBcrevmSPvn6ucF69KueUdH89sNK5tBrmRZGr7kBuUDPSuxG7NqMrN3cNr8xapPkWUvxaV@
+            gmail.com
+            ';
         //When
         //Then
         $this->expectException(RegisterException::class);
@@ -165,7 +185,7 @@ class testUserService extends TestCase
 
     public function testCheckRegister_MemberAlreadyExistThrown_Success() : void {
         //Given
-        addUser($this->userTestData['userPassword'], $this->user);
+        addUser($this->user);
         //When
         //Then
         $this->expectException(RegisterException::class);
@@ -173,7 +193,7 @@ class testUserService extends TestCase
     }
 
     public function cleanUser(){
-        require_once "../../model/dbConnector.php";
+        require_once "../../model/data/dbConnector.php";
         $query = "DELETE FROM accounts WHERE email ='" . $this->userTestData['userEmail'] ."';";
         executeQuery($query);
     }

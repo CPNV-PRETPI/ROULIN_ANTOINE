@@ -5,7 +5,7 @@
 * @author    Created by Antoine Roulin
 * @version   16.03.2023
 */
-
+require_once dirname(__FILE__) . "/../model/service/userService.php";
 /**
  * @brief This function is designed to check if user : fill correctly all fields,
  * email entered by user doesn't match with an email user already registered
@@ -17,14 +17,12 @@ function registerUser($registerData) : void
 {
     try {
         if (isset($registerData['userEmail']) &&
-            isset($registerData['userUsername']) &&
             isset($registerData['userPassword']) &&
             isset($registerData['userPasswordVerify'])
         ){
-            require_once dirname(__FILE__) . "/../model/userService.php";
-            $user = register($registerData);
-            $_SESSION['email'] = $user->getEmail();
-            require_once (dirname(__FILE__)."/../view/dashboard.php");
+            register($registerData);
+            $_SESSION['email'] = $registerData['userEmail'];
+            require_once (dirname(__FILE__)."/../view/home.php");
         } else {
             require_once (dirname(__FILE__)."/../view/register.php");
         }
@@ -33,7 +31,6 @@ function registerUser($registerData) : void
         $error = nl2br(
             "<b>Register problem, please follow this rules :</b>\n
             Email need to be : 319 character or shorter\n
-            Username need to be : 50 character or shorter \n
             Password need to be : 255 character or shorter \n
             Password Verify need to be : 255 character or shorter \n");
         require_once (dirname(__FILE__)."/../view/register.php");
@@ -54,10 +51,9 @@ function loginUser($loginData) : void
 {
     try {
         if(isset($loginData['userEmail']) && isset($loginData['userPassword'])){
-            require_once dirname(__FILE__) . "/../model/userService.php";
             $user = login($loginData);
-            $_SESSION['email'] = $user->getEmail();
-            require_once (dirname(__FILE__)."/../view/dashboard.php");
+            $_SESSION['email'] = $loginData['userEmail'];
+            require_once (dirname(__FILE__)."/../view/home.php");
         } else {
             require_once (dirname(__FILE__)."/../view/login.php");
         }
