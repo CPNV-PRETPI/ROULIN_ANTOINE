@@ -19,7 +19,7 @@ class testUserService extends TestCase
         $this->userTestData['userEmail'] = 'unittest@test.ch';
         $this->userTestData['userPassword'] = '1234';
         $this->userTestData['userPasswordVerify'] = '1234';
-        $this->user = new User($this->userTestData['userEmail']);
+        $this->user = new User($this->userTestData['userEmail'], $this->userTestData['userPassword']);
     }
 
     public function testCheckData_DataMeetDatabaseExpectation_Success(){
@@ -63,12 +63,12 @@ class testUserService extends TestCase
         //Given
         //When
         //Then
-        $this->assertFalse(doesMemberExist($this->userTestData['userEmail']));
+        $this->assertFalse(doesMemberExist($this->user->getEmail()));
     }
 
     public function testDoesMemberExist_UserAlreadyExist_Success(){
         //Given
-        addUser($this->userTestData['userPassword'], $this->user);
+        addUser($this->user);
         //When
         //Then
         $this->assertTrue(doesMemberExist($this->user->getEmail()));
@@ -77,7 +77,7 @@ class testUserService extends TestCase
     public function testAddUser_NominalCase_Success(){
         //Given
         //When
-        addUser($this->userTestData['userPassword'], $this->user);
+        addUser($this->user);
         //Then
         $this->assertTrue(doesMemberExist($this->user->getEmail()));
     }
@@ -87,12 +87,12 @@ class testUserService extends TestCase
         //When
         register($this->userTestData);
         //Then
-        $this->assertTrue(doesMemberExist($this->userTestData['userEmail']));
+        $this->assertTrue(doesMemberExist($this->user->getEmail()));
     }
 
     public function testRegister_UserAlreadyExist_ThrowException(){
         //Given
-        addUser($this->userTestData['userPassword'], $this->user);
+        addUser($this->user);
         //When
         //Then
         $this->expectException(RegisterException::class);
@@ -185,7 +185,7 @@ class testUserService extends TestCase
 
     public function testCheckRegister_MemberAlreadyExistThrown_Success() : void {
         //Given
-        addUser($this->userTestData['userPassword'], $this->user);
+        addUser($this->user);
         //When
         //Then
         $this->expectException(RegisterException::class);

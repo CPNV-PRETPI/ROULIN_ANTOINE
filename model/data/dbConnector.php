@@ -35,7 +35,7 @@ function executeQuery($query) : array|null
 
     $statement = $dbConnexion->prepare($query);
     $statement->execute();
-    $queryResult = $statement->fetchAll();
+    $queryResult = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     $dbConnexion = null;
     return $queryResult;

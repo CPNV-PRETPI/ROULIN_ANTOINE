@@ -20,8 +20,8 @@ function register($registerData) : User
     try {
         require_once dirname(__FILE__) . "/../data/dbConnector.php";
         checkRegister($registerData);
-        $user = new User($registerData['userEmail']);
-        addUser($registerData['userPassword'], $user);
+        $user = new User($registerData['userEmail'], $registerData['userPassword']);
+        addUser($user);
         return $user;
     }
     catch (PDOException|JsonFileException){
@@ -50,7 +50,7 @@ function login($loginData) : User
         if (!password_verify($loginData['userPassword'], $queryResult[0]['password'])) {
             throw new WrongLoginCredentials();
         }
-        return new User($queryResult[0]['email']);
+        return new User($queryResult[0]['email'], $queryResult[0]['password']);
     }
     catch(PDOException|JsonFileException){
         throw new SystemNotAvailable();
@@ -128,15 +128,14 @@ function doesMemberExist($email) : bool
 
 /**
  * @brief This function is designed to add a new user in the database.
- * @param $password
  * @param $user
  * @return void
  * @throws jsonFileException
  */
-function addUser($password, $user) : void
+function addUser($user) : void
 {
     require_once dirname(__FILE__) . "/../data/dbConnector.php";
-    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+    $passwordHash = password_hash($user->getPassword(), PASSWORD_DEFAULT);
     $query = "
         INSERT INTO accounts
         VALUES (
