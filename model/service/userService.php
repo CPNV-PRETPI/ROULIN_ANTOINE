@@ -128,7 +128,8 @@ function doesMemberExist($email) : bool
 
 /**
  * @brief This function is designed to add a new user in the database.
- * @param $registerData
+ * @param $password
+ * @param $user
  * @return void
  * @throws jsonFileException
  */
