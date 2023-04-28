@@ -5,7 +5,7 @@
 * @author    Created by Antoine Roulin
 * @version   16.03.2023
 */
-
+require_once dirname(__FILE__) . "/../model/service/userService.php";
 /**
  * @brief This function is designed to check if user : fill correctly all fields,
  * email entered by user doesn't match with an email user already registered
@@ -20,9 +20,8 @@ function registerUser($registerData) : void
             isset($registerData['userPassword']) &&
             isset($registerData['userPasswordVerify'])
         ){
-            require_once dirname(__FILE__) . "/../model/service/userService.php";
-            $user = register($registerData);
-            $_SESSION['email'] = $user->getEmail();
+            register($registerData);
+            $_SESSION['email'] = $registerData['userEmail'];
             require_once (dirname(__FILE__)."/../view/home.php");
         } else {
             require_once (dirname(__FILE__)."/../view/register.php");
@@ -52,9 +51,8 @@ function loginUser($loginData) : void
 {
     try {
         if(isset($loginData['userEmail']) && isset($loginData['userPassword'])){
-            require_once dirname(__FILE__) . "/../model/service/userService.php";
             $user = login($loginData);
-            $_SESSION['email'] = $user->getEmail();
+            $_SESSION['email'] = $loginData['userEmail'];
             require_once (dirname(__FILE__)."/../view/home.php");
         } else {
             require_once (dirname(__FILE__)."/../view/login.php");

@@ -15,14 +15,13 @@ include dirname(__FILE__) . "/../entity/User.php";
  * @throws RegisterException
  * @throws SystemNotAvailable
  */
-function register($registerData) : User
+function register($registerData) : void
 {
     try {
         require_once dirname(__FILE__) . "/../data/dbConnector.php";
         checkRegister($registerData);
         $user = new User($registerData['userEmail'], $registerData['userPassword']);
         addUser($user);
-        return $user;
     }
     catch (PDOException|JsonFileException){
         throw new SystemNotAvailable();
@@ -38,7 +37,7 @@ function register($registerData) : User
  * @throws SystemNotAvailable
  * @throws WrongLoginCredentials
  */
-function login($loginData) : User
+function login($loginData) : void
 {
     try {
         require_once dirname(__FILE__) . "/../data/dbConnector.php";
@@ -50,7 +49,6 @@ function login($loginData) : User
         if (!password_verify($loginData['userPassword'], $queryResult[0]['password'])) {
             throw new WrongLoginCredentials();
         }
-        return new User($queryResult[0]['email'], $queryResult[0]['password']);
     }
     catch(PDOException|JsonFileException){
         throw new SystemNotAvailable();
